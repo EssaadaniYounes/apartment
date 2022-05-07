@@ -5,15 +5,16 @@ import { useUserContext } from '../../../../context/user';
 import { AutoLogin } from '../../../../helpers/auto-login';
 import fetch from '../../../../helpers/fetch-data';
 
-function EditApartment({ dataUser, apartment }) {
-    const { setUser } = useUserContext();
+function EditApartment({ dataUser, apartment, lodgings }) {
+    const { setUser, setLodgings } = useUserContext();
     const router = useRouter();
     useEffect(() => {
         if (dataUser) {
             setUser(dataUser);
+            setLodgings(lodgings);
         }
         if (!apartment) {
-            router.push('/admin/apartments');
+            router.push('/admin/apartments/add');
         }
     }, []);
 
@@ -30,11 +31,13 @@ function EditApartment({ dataUser, apartment }) {
 export async function getServerSideProps(ctx) {
     const response = await AutoLogin(ctx);
     const { id } = ctx.params;
-    const apartment = await fetch(`apartments/${id}`, 'get', {}, ctx.req.cookies.token);
+    const lodgings = await fetch('lodgings', 'get', {}, ctx.req.cookies.token);
+    const apartment = await fetch(`properties/${id}`, 'get', {}, ctx.req.cookies.token);
     return {
         props: {
             dataUser: response.dataUser,
-            apartment: apartment.data
+            apartment: apartment.data,
+            lodgings: lodgings.data,
         }
     }
 }

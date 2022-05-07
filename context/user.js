@@ -4,9 +4,25 @@ const UserContext = createContext();
 
 export default function UserWrapper({ children }) {
     const [user, setUser] = useState(null);
+    const [lodgings, setLodgings] = useState([]);
     const [apartments, setApartments] = useState([]);
+    const [clients, setClients] = useState([]);
+    const [sales, setSales] = useState([]);
+    const [payments, setPayments] = useState([]);
+    const [notifications, setNotifications] = useState([]);
+    const [showNotifications, setShowNotifications] = useState(false);
     return (
-        <UserContext.Provider value={{ user, setUser, apartments, setApartments }}>
+        <UserContext.Provider
+            value={{
+                user, setUser,
+                lodgings, setLodgings,
+                apartments, setApartments,
+                clients, setClients,
+                sales, setSales,
+                payments, setPayments,
+                notifications, setNotifications,
+                showNotifications, setShowNotifications
+            }}>
             {children}
         </UserContext.Provider>
     )
