@@ -51,7 +51,7 @@ function Sale({ sale = null }) {
 
         if (response) setIsLoading(false);
         if (response.status === 201) {
-            toast.notify('Client bien ajouté !', {
+            toast.notify('Vente bien ajouté !', {
                 duration: 2,
                 type: "success"
             })
@@ -81,7 +81,7 @@ function Sale({ sale = null }) {
         const response = await fetch(`sales/${sale.id}`, 'put', payload, user.token);
         if (response) setIsLoading(false);
         if (response.status === 200) {
-            toast.notify('Client bien Modifie !', {
+            toast.notify('Vente bien Modifie !', {
                 duration: 2,
                 type: "success"
             })
@@ -134,7 +134,7 @@ function Sale({ sale = null }) {
                         <select className={classes.input}
                             value={clientId}
                             onChange={(e) => setClientId(e.target.value)}>
-                            <option disabled selected value={''}>Choisir Un Client</option>
+                            <option disabled defaultChecked value={''}>Choisir Un Client</option>
                             {
                                 clients.length && clients.map(client => {
                                     return <option value={client.id} key={client.id}>{client.name}</option>
@@ -147,7 +147,7 @@ function Sale({ sale = null }) {
                         <select className={classes.input}
                             value={propertyId}
                             onChange={(e) => { setPropertyId(e.target.value); getAmount(e.target.value) }}>
-                            <option disabled selected value={''}>Choisir Un Propriété</option>
+                            <option disabled defaultChecked value={''}>Choisir Un Propriété</option>
                             {
                                 apartments.length && apartments.map(apartment => {
                                     return <option value={apartment.id} key={apartment.id}>{apartment.city}</option>

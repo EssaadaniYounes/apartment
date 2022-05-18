@@ -7,20 +7,21 @@ import Loader from './Loader';
 import AddLodging from './AddLodging';
 import { useUserContext } from '../../context/user';
 const classes = {
-    label: 'absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6',
+    label: 'absolute text-[15px] text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6',
     input: 'block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer',
-    select: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 block w-full mt-4 p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500',
+    select: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full mt-4 p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500',
 }
 
 function AddApartment({ apartment = null }) {
     const { lodgings } = useUserContext();
     //fields
     const [type, setType] = useState(apartment ? apartment.type : 'appartment');
+    const [numApartment, setNumApartment] = useState(apartment ? apartment.num_apartment : 0);
     const [lounge, setLounge] = useState(apartment ? apartment.lounge : '');
     const [room, setRoom] = useState(apartment ? apartment.room : '');
     const [toilet, setToilet] = useState(apartment ? apartment.toilet : '');
-    const [bathroom, setBathroom] = useState(apartment ? apartment.bathroom : '');
-    const [lodgingId, setLodgingId] = useState(apartment ? apartment.lodging_id : '');
+    const [cuisine, setCuisine] = useState(apartment ? apartment.cuisine : '');
+    const [lodgingId, setLodgingId] = useState(apartment ? apartment.lodging_id : 1);
     const [city, setCity] = useState(apartment ? apartment.city : '');
     const [address, setAddress] = useState(apartment ? apartment.address : '');
     const [space, setSpace] = useState(apartment ? apartment.space : '');
@@ -61,11 +62,13 @@ function AddApartment({ apartment = null }) {
         await saveImages();
 
         const payload = {
+
             'lodging_id': lodgingId,
+            'num_apartment': numApartment,
             'lounge': lounge,
             'room': room,
             'toilet': toilet,
-            'bathroom': bathroom,
+            'cuisine': cuisine,
             'type': type,
             'city': city,
             'space': space,
@@ -101,10 +104,11 @@ function AddApartment({ apartment = null }) {
 
         const payload = {
             'lodging_id': lodgingId,
+            'num_apartment': numApartment,
             'lounge': lounge,
             'room': room,
             'toilet': toilet,
-            'bathroom': bathroom,
+            'cuisine': cuisine,
             'type': type,
             'city': city,
             'space': space,
@@ -145,7 +149,7 @@ function AddApartment({ apartment = null }) {
     return (
         <>
             {isLoading && <Loader />}
-            {showModal && <div className=' z-10 absolute left-0 top-0 bg-[#00000030] w-screen h-screen'> <AddLodging setValue={setLodgingId} setShowModal={setShowModal} /></div>}
+            {showModal && <div className='z-10 absolute left-0 top-0 bg-[#00000030] w-screen h-screen'> <AddLodging setValue={setLodgingId} setShowModal={setShowModal} /></div>}
             <Form>
                 <ToastContainer align={"right"} position={"bottom"} />
                 {/* Localisations */}
@@ -179,19 +183,19 @@ function AddApartment({ apartment = null }) {
                         </select>
                         <label className={classes.label}>Statut</label>
                     </div>
-                    <div className="relative z-0 mb-6 w-full md:w-[49%] group">
-                        <div className='flex items-center'>
-                            <select className={classes.select}
+                    <div className=" z-0 mb-6 w-full md:w-[49%] group">
+                        <div className='flex relative items-center'>
+                            <select className={classes.select + ' rounded-r-none'}
                                 placeholder=" "
                                 value={lodgingId}
                                 onChange={(e) => setLodgingId(e.target.value)}>
-                                {lodgings.map((lodging) => <option key={lodging.id} value={lodging.id}>{lodging.name}</option>)}
+                                {lodgings.length && lodgings.map((lodging) => <option key={lodging.id} value={lodging.id}>{lodging.name}</option>)}
                             </select>
                             <svg xmlns="http://www.w3.org/2000/svg" onClick={() => setShowModal(true)} className="h-[34px] mt-4 w-12 rounded-r-lg bg-gray-400 duration-200 cursor-pointer hover:bg-gray-500 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                         </div>
-                        <label className={classes.label}>Mobel</label>
+                        <label className={classes.label}>Projet</label>
                     </div>
                 </TwoItemsContainer>
                 <TwoItemsContainer>
@@ -213,6 +217,27 @@ function AddApartment({ apartment = null }) {
                             onChange={(e) => { setPrice(e.target.value) }} />
                         <label className={classes.label}>Prix</label>
                     </div>
+                </TwoItemsContainer>
+
+
+
+                <TwoItemsContainer>
+                    {type == 'appartment' && <> <div className="relative z-0 mb-6 w-full md:w-[49%] group">
+                        <input type="text"
+                            className={classes.input}
+                            placeholder=" "
+                            value={numApartment}
+                            onChange={(e) => { setNumApartment(e.target.value) }} />
+                        <label className={classes.label}>Num Appartement</label>
+                    </div>
+                        <div className="relative z-0 mb-6 w-full md:w-[49%] group">
+                            <input type="text"
+                                className={classes.input}
+                                placeholder=" "
+                                value={class_}
+                                onChange={(e) => { setClass_(e.target.value) }} />
+                            <label className={classes.label}>Étage</label>
+                        </div></>}
                 </TwoItemsContainer>
                 {/* Composants */}
                 <TwoItemsContainer>
@@ -244,9 +269,9 @@ function AddApartment({ apartment = null }) {
                         <input type="text"
                             className={classes.input}
                             placeholder=" "
-                            value={bathroom}
-                            onChange={(e) => setBathroom(e.target.value)} />
-                        <label className={classes.label}>Bain</label>
+                            value={cuisine}
+                            onChange={(e) => setCuisine(e.target.value)} />
+                        <label className={classes.label}>Cuisine</label>
                     </div>
                 </TwoItemsContainer>
                 <TwoItemsContainer>
@@ -269,18 +294,8 @@ function AddApartment({ apartment = null }) {
                         <label className={classes.label}>Images</label>
                     </div>
                 </TwoItemsContainer>
-                <TwoItemsContainer>
-                    {
-                        type == 'appartment' && <div className="relative z-0 mb-6 w-full md:w-[49%] group">
-                            <input type="text"
-                                className={classes.input}
-                                placeholder=" "
-                                value={class_}
-                                onChange={(e) => { setClass_(e.target.value) }} />
-                            <label className={classes.label}>Étage</label>
-                        </div>
-                    }
-                </TwoItemsContainer>
+
+
             </Form>
 
             <div className='flex items-center flex-wrap gap-8 justify-center mt-6'>

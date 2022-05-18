@@ -15,7 +15,11 @@ export async function AutoLogin(ctx) {
         }
     } else {
         return {
-            dataUser: undefined
+            dataUser: {
+                email: 'younes@gmail.com',
+                password: '1234',
+                name: 'Younes',
+            }
         }
     }
 }

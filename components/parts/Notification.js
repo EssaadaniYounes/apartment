@@ -15,7 +15,7 @@ function Notification({ notification }) {
                 doit payer <span className="font-semibold">{notification.monthly_amount} DH </span>
                 , propertié <span className="font-semibold">{notification.type} </span>
                 à <span className="font-semibold">{notification.city} </span>,
-                mobel <span className="font-semibold">{notification.lodging} </span>
+                Projet <span className="font-semibold">{notification.lodging} </span>
             </p>
         </div>
     )

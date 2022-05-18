@@ -6,15 +6,15 @@ function SaleCard({ data }) {
 
             <Card>
                 <SmallInfos label="Client" value={data.name} />
-                <SmallInfos label="Mobel" value={data.lodging} />
+                <SmallInfos label="Projet" value={data.lodging} />
             </Card>
             <Card>
                 <SmallInfos label="Ville" value={data.city} />
                 <SmallInfos label="Propertié adresse" value={data.address} />
             </Card>
             <Card>
-                <SmallInfos label="Prix de vente" value={data.agreed_amount+'DH'} />
-                <SmallInfos label="Reste" value={data.rest+'DH'} />
+                <SmallInfos label="Prix de vente" value={data.agreed_amount + 'DH'} />
+                <SmallInfos label="Reste" value={data.rest + 'DH'} />
             </Card>
         </div >
     )

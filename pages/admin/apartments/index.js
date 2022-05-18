@@ -10,13 +10,12 @@ import { AutoLogin } from '../../../helpers/auto-login';
 
 
 export default function Apartments({ dataUser, dataApartments }) {
-
     const [isDeleting, setIsDeleting] = useState(false);
 
     const columns = [
         {
             name: "#",
-            cell: (row, index) => <img src={JSON.parse(row.images)[0]||'/images/logo.png'} />,
+            cell: (row, index) => <img src={JSON.parse(row.images)[0] || '/images/logo.png'} />,
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
@@ -127,7 +126,8 @@ export default function Apartments({ dataUser, dataApartments }) {
                     <label className='absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'>Chercher</label>
                 </div>
                 <div className="max-w-full">
-                    <CustomDataTable columns={columns} data={apartments} />
+                    {apartments && <CustomDataTable columns={columns} data={apartments} />
+                    }
                 </div>
             </div>
         </>

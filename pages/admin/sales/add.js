@@ -5,12 +5,13 @@ import { AutoLogin } from '../../../helpers/auto-login'
 import fetch from '../../../helpers/fetch-data';
 
 function add({ dataUser, properties, clients }) {
-
+    console.log(properties);
     const { setUser, setApartments, setClients } = useUserContext();
 
     useEffect(() => {
         if (dataUser) {
             setUser(dataUser);
+            setApartments([]);
             setApartments(properties);
             setClients(clients);
         }
@@ -27,7 +28,7 @@ function add({ dataUser, properties, clients }) {
 
 export const getServerSideProps = async (ctx) => {
     const data = await AutoLogin(ctx);
-    const propertiesResponse = await fetch('properties', 'get', {}, ctx.req.cookies.token);
+    const propertiesResponse = await fetch('available', 'get', {}, ctx.req.cookies.token);
     const clientsResponse = await fetch('clients', 'get', {}, ctx.req.cookies.token);
     return {
         props: {

@@ -28,7 +28,7 @@ export const getServerSideProps = async (ctx) => {
     const { id } = ctx.params;
     const res = await fetch(`sales/${id}`, 'get', {}, ctx.req.cookies.token);
     const data = await AutoLogin(ctx);
-    const propertiesResponse = await fetch('properties', 'get', {}, ctx.req.cookies.token);
+    const propertiesResponse = await fetch('available', 'get', {}, ctx.req.cookies.token);
     const clientsResponse = await fetch('clients', 'get', {}, ctx.req.cookies.token);
     return {
         props: {
