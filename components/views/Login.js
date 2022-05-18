@@ -23,12 +23,12 @@ function Login() {
         if (response.status === 404) return setError(response.data.data.error);
         //Redirect to dashboard page if user is logged in 
         if (response.status === 200) {
-            setCookie('token', response.data.data.token, 30 * 24 * 60);
-            localStorage.setItem('token', response.data.data.token);
+            setCookie('token', response.data.token, 30 * 24 * 60);
+            localStorage.setItem('token', response.data.token);
             setCookie('email', payload.email, 30 * 24 * 60);
             setCookie('password', payload.password, 30 * 24 * 60);
-            setUser(response.data.data);
-            router.push('/admin')
+            setUser(response.data);
+            router.push('https://apartment-8k21xtghg-essaadaniyounes.vercel.app/admin')
         };
     }
     return (
