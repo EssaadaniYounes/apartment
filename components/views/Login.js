@@ -28,7 +28,7 @@ function Login() {
             setCookie('email', payload.email, 30 * 24 * 60);
             setCookie('password', payload.password, 30 * 24 * 60);
             setUser(response.data);
-            router.push('https://apartment-8k21xtghg-essaadaniyounes.vercel.app/admin')
+            router.push('/admin/');
         };
     }
     return (
