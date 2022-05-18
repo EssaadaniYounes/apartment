@@ -9,9 +9,13 @@ export async function AutoLogin(ctx) {
             'password': password
         }
 
-        const response = await fetch('login', 'post', authData)
+        const response = await fetch('login', 'post', authData);
         return {
-            dataUser: response.data.data
+            dataUser: response.data != undefined ? response.data : {
+                email: 'younes@gmail.com',
+                password: '1234',
+                name: 'Younes',
+            },
         }
     } else {
         return {
