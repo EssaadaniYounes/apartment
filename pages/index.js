@@ -16,7 +16,7 @@ const Home = ({ dataUser }) => {
   }, [])
 
   return (
-    
+
     <div className="flex min-h-screen flex-col items-center justify-center py-2">
       <Head>
         <title>Create Next App</title>
@@ -27,7 +27,7 @@ const Home = ({ dataUser }) => {
   )
 }
 
-Home.getInitialProps = async (ctx) => {
+export const getServerSideProps = async (ctx) => {
   return AutoLogin(ctx);
 }
 
