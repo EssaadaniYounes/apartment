@@ -21,6 +21,5 @@ export default function groupByCity(data) {
         }
         isExist = false;
     })
-    console.log(keys)
     return keys;
 }

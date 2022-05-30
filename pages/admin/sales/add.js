@@ -5,7 +5,6 @@ import { AutoLogin } from '../../../helpers/auto-login'
 import fetch from '../../../helpers/fetch-data';
 
 function add({ dataUser, properties, clients }) {
-    console.log(properties);
     const { setUser, setApartments, setClients } = useUserContext();
 
     useEffect(() => {

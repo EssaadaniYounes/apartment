@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { toast, ToastContainer } from 'react-nextjs-toast'
-import Loader from './Loader';
-import Form from './Form';
+import { Loader, TwoItemsContainer, Form } from './';
 import { useUserContext } from '../../context/user';
 import fetch from '../../helpers/fetch-data';
 
@@ -14,7 +13,7 @@ function Sale({ sale = null }) {
     const { apartments, clients, user, setSales } = useUserContext();
     //fields
     const [isLoading, setIsLoading] = useState(false);
-    const [numSale, setNumSale] = useState(sale ? sale.num_sale : '');
+    const [saleType, setSaleType] = useState(sale ? sale.sale_type : '');
     const [dateSale, setDateSale] = useState(sale ? sale.date_sale : '');
     const [clientId, setClientId] = useState(sale ? sale.client_id : '');
     const [propertyId, setPropertyId] = useState(sale ? sale.property_id : '');
@@ -36,7 +35,7 @@ function Sale({ sale = null }) {
         setIsLoading(true);
         const payload = {
             'client_id': clientId,
-            'num_sale': numSale,
+            'sale_type': saleType,
             'property_id': propertyId,
             'date_sale': dateSale,
             'advanced_amount': advancedAmount,
@@ -68,7 +67,7 @@ function Sale({ sale = null }) {
 
         const payload = {
             'client_id': clientId,
-            'num_sale': numSale,
+            'sale_type': saleType,
             'property_id': propertyId,
             'date_sale': dateSale,
             'advanced_amount': advancedAmount,
@@ -115,10 +114,10 @@ function Sale({ sale = null }) {
                     <div className="relative z-0 mb-6 w-full md:w-[49%] group">
                         <input type="text"
                             className={classes.input}
-                            value={numSale}
-                            onChange={(e) => setNumSale(e.target.value)}
+                            value={saleType}
+                            onChange={(e) => setSaleType(e.target.value)}
                             placeholder=" " />
-                        <label className={classes.label}>Num Dossier</label>
+                        <label className={classes.label}>Type de vente</label>
                     </div>
                     <div className="relative z-0 mb-6 w-full md:w-[49%] group">
                         <input type="date"
@@ -150,7 +149,7 @@ function Sale({ sale = null }) {
                             <option disabled defaultChecked value={''}>Choisir Un Propriété</option>
                             {
                                 apartments.length && apartments.map(apartment => {
-                                    return <option value={apartment.id} key={apartment.id}>{apartment.city}</option>
+                                    return <option value={apartment.id} key={apartment.id}>{apartment.city + '/' + apartment.type + '/' + (apartment.type == 'appartment' ? apartment.num_apartment : '')}</option>
                                 })
                             }
                         </select>
@@ -190,7 +189,7 @@ function Sale({ sale = null }) {
                                         value={paymentDate}
                                         onChange={(e) => setPaymentDate(e.target.value)}
                                         placeholder=" " />
-                                    <label className={classes.label}>Jour Echéance (ex: le 10 a chaque mois) </label>
+                                    <label className={classes.label}>Jour Echéance (ex: le 10 a chaque mois (option)) </label>
                                 </div>
 
                                 <div className="relative z-0 mb-6 inline-block w-full md:w-[49%] group">
@@ -255,12 +254,6 @@ function Sale({ sale = null }) {
     )
 }
 
-const TwoItemsContainer = (props) => {
-    return (
-        <div className="flex flex-col justify-between md:flex-row gap-4 my-3 relative">
-            {props.children}
-        </div>
-    )
-}
+
 
 export default Sale

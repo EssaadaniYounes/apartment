@@ -12,7 +12,7 @@ function Notification({ notification }) {
             </h4>
             <p></p>
             <p className="text-ellipsis">
-                doit payer <span className="font-semibold">{notification.monthly_amount} DH </span>
+                doit payer <span className="font-semibold">{notification.rest} DH </span>
                 , propertié <span className="font-semibold">{notification.type} </span>
                 à <span className="font-semibold">{notification.city} </span>,
                 Projet <span className="font-semibold">{notification.lodging} </span>

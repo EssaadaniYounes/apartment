@@ -3,7 +3,8 @@ import { toast, ToastContainer } from 'react-nextjs-toast'
 
 import { Form } from './index'
 import fetch from '../../helpers/fetch-data';
-import Loader from './Loader';
+import { Loader, TwoItemsContainer } from './';
+import Image from 'next/image';
 const classes = {
     label: 'absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6',
     input: 'block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer',
@@ -16,19 +17,46 @@ function Client({ client = null }) {
     const [name, setName] = useState(client ? client.name : '');
     const [address, setAddress] = useState(client ? client.address : '');
     const [phone, setPhone] = useState(client ? client.phone : '');
+    const [phoneSecond, setPhoneSecond] = useState(client ? client.phone_second : '');
     const [cin, setCin] = useState(client ? client.cin : '');
+    const [images, setImages] = useState([]);
+    const [imagesPreview, setImagesPreview] = useState(client ? JSON.parse(client?.images) : '');
+    let paths = client?.images ? client.images : '';
 
     //functions
+    const uploadImages = async () => {
+
+        paths = [];
+        const formData = new FormData();
+        let TotalImages = images.length;
+
+        const date = new Date();
+        const day = date.getDate();
+        for (let i = 0; i < TotalImages; i++) {
+            //get day of month
+
+            paths.push(`http://127.0.0.1:8000/images/clients/${i}-${day}-${images[i].name}`);
+
+            formData.append('images' + i, images[i]);
+            formData.append('Prefix' + i, `${i}-${day}-`);
+        }
+
+        formData.append('TotalImages', TotalImages);
+
+        await fetch('clients/store', 'post', formData, localStorage.getItem('token'))
+    }
     //add
 
     const AddClient = async () => {
         setIsLoading(true);
-
+        images.length && await uploadImages();
         const payload = {
             'email': email,
             'address': address,
             'phone': phone,
+            'phone_second': phoneSecond,
             'cin': cin,
+            'images': paths,
             'name': name
         }
 
@@ -50,12 +78,14 @@ function Client({ client = null }) {
     //update
     const updateClient = async () => {
         setIsLoading(true);
-
+        images && await uploadImages();
         const payload = {
             'email': email,
             'address': address,
             'phone': phone,
+            'phone_second': phoneSecond,
             'cin': cin,
+            'images': paths,
             'name': name
         }
 
@@ -74,7 +104,16 @@ function Client({ client = null }) {
         };
 
     }
-
+    let imgsPreview = [];
+    const handlePreview = (e) => {
+        setImages(e.target.files);
+        for (let i = 0; i < e.target.files.length; i++) {
+            if (e.target.files[i]) {
+                imgsPreview.push(URL.createObjectURL(e.target.files[i]));
+            }
+        }
+        setImagesPreview(imgsPreview);
+    }
     //render
     return (
         <>
@@ -86,10 +125,21 @@ function Client({ client = null }) {
                         <input type="text"
                             className={classes.input}
                             placeholder=" "
-                            value={cin}
-                            onChange={(e) => setCin(e.target.value)} />
-                        <label className={classes.label}>CIN</label>
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)} />
+                        <label className={classes.label}>Tél</label>
                     </div>
+
+                    <div className="relative z-0 mb-6 w-full md:w-[49%] group">
+                        <input type="text"
+                            className={classes.input}
+                            placeholder=" "
+                            value={phoneSecond}
+                            onChange={(e) => setPhoneSecond(e.target.value)} />
+                        <label className={classes.label}>Tél (option)</label>
+                    </div>
+                </TwoItemsContainer>
+                <TwoItemsContainer>
                     <div className="relative z-0 mb-6 w-full md:w-[49%] group">
                         <input type="text"
                             className={classes.input}
@@ -98,9 +148,6 @@ function Client({ client = null }) {
                             onChange={(e) => setName(e.target.value)} />
                         <label className={classes.label}>Nom</label>
                     </div>
-                </TwoItemsContainer>
-                <TwoItemsContainer>
-
                     <div className="relative z-0 mb-6 w-full md:w-[49%] group">
                         <input type="text"
                             className={classes.input}
@@ -109,6 +156,9 @@ function Client({ client = null }) {
                             onChange={(e) => setEmail(e.target.value)} />
                         <label className={classes.label}>Email</label>
                     </div>
+
+                </TwoItemsContainer>
+                <TwoItemsContainer>
                     <div className="relative z-0 mb-6 w-full md:w-[49%] group">
                         <input type="text"
                             className={classes.input}
@@ -117,18 +167,37 @@ function Client({ client = null }) {
                             onChange={(e) => setAddress(e.target.value)} />
                         <label className={classes.label}>Address</label>
                     </div>
-                </TwoItemsContainer>
-                <TwoItemsContainer>
                     <div className="relative z-0 mb-6 w-full md:w-[49%] group">
                         <input type="text"
                             className={classes.input}
                             placeholder=" "
-                            value={phone}
-                            onChange={(e) => setPhone(e.target.value)} />
-                        <label className={classes.label}>Tél</label>
+                            value={cin}
+                            onChange={(e) => setCin(e.target.value)} />
+                        <label className={classes.label}>CIN</label>
                     </div>
+
+
+                </TwoItemsContainer>
+                <TwoItemsContainer>
+                    <div className="relative -mt-[6px] z-0 mb-6 w-full md:w-[49%] group">
+                        <input type="file"
+                            className={classes.input}
+                            placeholder=" "
+                            accept='.png, .jpg, .jpeg'
+                            multiple
+                            onChange={(e) => { handlePreview(e) }} />
+                        <label className={classes.label}>Carte Nationalle</label>
+                    </div>
+
                 </TwoItemsContainer>
             </Form>
+            {imagesPreview.length > 0 &&
+                <div className="relative flex items-center flex-wrap gap-8 justify-center mt-6">
+                    {imagesPreview.map((image, index) => {
+                        return <Image key={index} width={300} height={150} style={{ borderRadius: 15 }} src={image} priority />
+                    })}
+                </div>
+            }
             <div className="mx-auto w-fit mt-8">
                 {
                     // show add or update button if theres an client
@@ -158,12 +227,6 @@ function Client({ client = null }) {
         </>
     )
 }
-const TwoItemsContainer = (props) => {
-    return (
-        <div className="flex flex-col justify-between md:flex-row gap-4 my-3 relative">
-            {props.children}
-        </div>
-    )
-}
+
 
 export default Client

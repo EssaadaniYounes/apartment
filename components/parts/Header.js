@@ -5,7 +5,7 @@ import { useUserContext } from '../../context/user';
 function Header() {
     const { user, setShowNotifications, notifications } = useUserContext();
     return (
-        <div className="bg-gray-50 shadow-md text-gray-700 h-[60px] w-full z-20 flex items-center px-12 justify-start gap-6 flex-row-reverse">
+        <div className="not-print bg-gray-50 shadow-md text-gray-700 h-[60px] w-full z-20 flex items-center px-12 justify-start gap-6 flex-row-reverse">
             <Link href='/auth' >
                 <a className="flex items-center gap-1 text-sm font-semibold duration-100 hover:text-gray-500">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

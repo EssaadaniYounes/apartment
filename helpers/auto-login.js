@@ -10,6 +10,9 @@ export async function AutoLogin(ctx) {
         }
 
         const response = await fetch('login', 'post', authData);
+        if (response.data.roles?.permissions) {
+            response.data.roles.permissions = JSON.parse(response.data?.roles?.permissions);
+        }
         return {
             dataUser: response.data != undefined ? response.data : {
                 email: 'younes@gmail.com',

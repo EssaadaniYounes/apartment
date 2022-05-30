@@ -5,13 +5,14 @@ import fetch from '../../../../../helpers/fetch-data';
 import { AutoLogin } from '../../../../../helpers/auto-login';
 import { useUserContext } from '../../../../../context/user';
 import { CustomDataTable, Loader, TablesHeader } from '../../../../../components/parts';
+import { can } from '../../../../../helpers/can';
 function index({ dataPayments, dataUser, dataClients }) {
     const { setPayments, setUser, payments } = useUserContext();
     const [isDeleting, setIsDeleting] = useState(false);
     const [from, setFrom] = useState(0);
     const [to, setTo] = useState(0);
     const [clientId, setClientId] = useState(0);
-
+    const permission = dataUser.roles.permissions.paiments;
     const columns = [
         {
             name: "#",
@@ -23,16 +24,27 @@ function index({ dataPayments, dataUser, dataClients }) {
         {
             name: "Actions",
             cell: row => <div className="flex items-center gap-2">
-                <button onClick={() => deletePayment(row.id)}>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 duration-100 hover:text-red-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                    </svg>
-                </button>
-                <Link href={`/admin/sales/sale/payments/payment/${row.id}`}>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 cursor-pointer duration-100 hover:text-orange-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                    </svg>
-                </Link>
+                {
+                    can(permission, 'delete') && <button onClick={() => deletePayment(row.id)}>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 duration-100 hover:text-red-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                    </button>
+                }
+                {
+                    can(permission, 'update') && <Link href={`/admin/sales/sale/payments/payment/${row.id}`}>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 cursor-pointer duration-100 hover:text-orange-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                        </svg>
+                    </Link>
+                }
+                {
+                    can(permission, 'imprimer') && <Link href={`/admin/sales/sale/payment/print/${row.id}`}>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 cursor-pointer duration-100 hover:text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                        </svg>
+                    </Link>
+                }
             </div>,
             ignoreRowClick: true,
             allowOverflow: true,
@@ -119,8 +131,8 @@ function index({ dataPayments, dataUser, dataClients }) {
     useEffect(() => {
         if (dataPayments.length) {
             setPayments(dataPayments);
-            setUser(dataUser);
         }
+        setUser(dataUser);
     }, []);
     return (
         <>
@@ -129,7 +141,7 @@ function index({ dataPayments, dataUser, dataClients }) {
                 <div className="absolute z-10 -top-[100px] bg-red-400">
                     <ToastContainer />
                 </div>
-                <TablesHeader to='/admin/sales/sale/payments/add' title='List de payments' />
+                <TablesHeader to={can(permission, 'create') && '/admin/sales/sale/payments/add'} title='List de payments' />
                 <div className='flex items-center'>
                     <div className="relative ml-6 mt-8 z-0 mb-6 w-full md:w-[30%] group">
                         <select

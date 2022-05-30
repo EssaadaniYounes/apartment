@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import Form from './Form'
 
 import { toast, ToastContainer } from 'react-nextjs-toast'
-import Loader from './Loader';
+import { Loader, TwoItemsContainer } from './';
 import { useUserContext } from '../../context/user';
 import fetch from '../../helpers/fetch-data';
 const classes = {
@@ -12,17 +12,17 @@ const classes = {
 
 function Payment({ payment = null, saleDetails = null }) {
     const [isLoading, setIsLoading] = useState(false);
-    const [numPayment, setNumPayment] = useState(payment ? payment.num_payment : '');
     const [paymentDate, setPaymentDate] = useState(payment ? payment.payment_date : '');
+    const [paymentType, setPaymentType] = useState(payment ? payment.payment_type : '');
     const [amount, setAmount] = useState(payment ? payment.amount : '');
     const [nextPayment, setNextPayment] = useState(payment ? payment.next_payment : '');
     const [saleId, setSaleId] = useState(payment ? payment.sale_id : '');
 
     const [client, setClient] = useState(saleDetails?.name);
     const [property, setProperty] = useState(saleDetails?.city || '');
-    const [agreedAmount, setAgreedAmount] = useState(saleDetails?.agreed_amount || '');
-    const [total, setTotal] = useState((+saleDetails?.agreed_amount - +saleDetails?.rest) || '')
-    const [rest, setRest] = useState(saleDetails?.rest || '');
+    const [agreedAmount, setAgreedAmount] = useState(saleDetails?.agreed_amount || 0);
+    const [rest, setRest] = useState(saleDetails?.rest || 0);
+    const [total, setTotal] = useState(+saleDetails?.agreed_amount - rest);
     const [monthlyAmount, setMonthlyAmount] = useState(saleDetails?.monthly_amount || '');
 
     const { sales } = useUserContext();
@@ -34,8 +34,8 @@ function Payment({ payment = null, saleDetails = null }) {
             setClient(sale.name)
             setProperty(sale.city);
             setAgreedAmount(sale.agreed_amount);
-            setTotal(+sale.agreed_amount - +sale.rest + sale.agreed_amount - +sale.rest)
             setRest(sale.rest - amount);
+            setTotal(+sale.agreed_amount - rest)
         }
 
     }, [saleId, amount])
@@ -44,8 +44,8 @@ function Payment({ payment = null, saleDetails = null }) {
     const addPayment = async () => {
         setIsLoading(true);
         const body = {
-            num_payment: numPayment,
             payment_date: paymentDate,
+            payment_type: paymentType,
             amount: amount,
             next_payment: nextPayment,
             sale_id: saleId
@@ -65,8 +65,8 @@ function Payment({ payment = null, saleDetails = null }) {
     const updatePayment = async () => {
         setIsLoading(true);
         const body = {
-            num_payment: numPayment,
             payment_date: paymentDate,
+            payment_type: paymentType,
             amount: amount,
             next_payment: nextPayment,
             sale_id: saleId
@@ -93,20 +93,36 @@ function Payment({ payment = null, saleDetails = null }) {
             <Form>
                 <TwoItemsContainer>
                     <div className="relative z-0 mb-6 w-full md:w-[49%] group">
-                        <input type="text"
-                            value={numPayment}
-                            onChange={(e) => setNumPayment(e.target.value)}
-                            className={classes.input}
-                            placeholder=" " />
-                        <label className={classes.label}>Num Transaction</label>
-                    </div>
-                    <div className="relative z-0 mb-6 w-full md:w-[49%] group">
                         <input type="date"
                             value={paymentDate}
                             onChange={(e) => setPaymentDate(e.target.value)}
                             className={classes.input}
                             placeholder=" " />
                         <label className={classes.label}>Date Payment</label>
+                    </div>
+                    <div className="relative z-0 mb-6 w-full md:w-[49%] group">
+                        <select value={paymentType} onChange={(e) => { setPaymentType(e.target.value) }} className={classes.input}>
+                            <option value="" disabled>Choisir un type de paiement</option>
+                            <option value="cash">Espèce</option>
+                            <option value="cheque">Chèque</option>
+                            <option value="virement">Virement</option>
+                        </select>
+                        <label className={classes.label}>Type de paiement</label>
+                    </div>
+                </TwoItemsContainer>
+                <TwoItemsContainer>
+                    <div className="relative z-0 mb-6 w-full md:w-[49%] group">
+                        <select className={classes.input} value={saleId} onChange={(e) => { setSaleId(e.target.value) }}>
+                            <option value="" defaultChecked={true}>Choisir la vente</option>
+                            {sales.map(sale => <option value={sale.id} key={sale.id}>{sale.city + ' / ' + sale.name}</option>)}
+                        </select>
+                        <label className={classes.label}>Dossier</label>
+                    </div>
+                    <div className="relative z-0 mb-6 w-full md:w-[49%] group">
+                        <input type="text"
+                            value={client}
+                            className={classes.input} readOnly />
+                        <label className={classes.label}>Client</label>
                     </div>
                 </TwoItemsContainer>
                 <TwoItemsContainer>
@@ -119,55 +135,42 @@ function Payment({ payment = null, saleDetails = null }) {
                         <label className={classes.label}>Montant</label>
                     </div>
                     <div className="relative z-0 mb-6 w-full md:w-[49%] group">
-                        <select className={classes.input} value={saleId} onChange={(e) => { setSaleId(e.target.value) }}>
-                            <option value="" defaultChecked={true}>Choisir la vente</option>
-                            {sales.map(sale => <option value={sale.id} key={sale.id}>{sale.city + ' / ' + sale.name}</option>)}
-                        </select>
-                        <label className={classes.label}>Dossier</label>
-                    </div>
-                </TwoItemsContainer>
-                <TwoItemsContainer>
-                    <div className="relative z-0 mb-6 w-full md:w-[49%] group">
-                        <input type="text"
-                            value={client}
-                            className={classes.input} readOnly />
-                        <label className={classes.label}>Client</label>
-                    </div>
-                    <div className="relative z-0 mb-6 w-full md:w-[49%] group">
-                        <input type="text"
-                            value={property}
-                            className={classes.input} readOnly />
-                        <label className={classes.label}>Propriété</label>
-                    </div>
-                </TwoItemsContainer>
-                <TwoItemsContainer>
-                    <div className="relative z-0 mb-6 w-full md:w-[49%] group">
-                        <input type="text"
-                            value={agreedAmount}
-                            className={classes.input} readOnly />
-                        <label className={classes.label}>Prix de vente</label>
-                    </div>
-                    <div className="relative z-0 mb-6 w-full md:w-[49%] group">
-                        <input type="text"
-                            value={total}
-                            className={classes.input} readOnly />
-                        <label className={classes.label}>total payé</label>
-                    </div>
-                </TwoItemsContainer>
-                <TwoItemsContainer>
-                    <div className="relative z-0 mb-6 w-full md:w-[49%] group">
-                        <input type="text"
-                            value={rest}
-                            className={classes.input} readOnly />
-                        <label className={classes.label}>Reste</label>
-                    </div>
-                    <div className="relative z-0 mb-6 w-full md:w-[49%] group">
                         <input type="date"
                             placeholder=" "
                             value={nextPayment}
                             onChange={(e) => setNextPayment(e.target.value)}
                             className={classes.input} />
                         <label className={classes.label}>Prochain échiance </label>
+                    </div>
+
+                </TwoItemsContainer>
+                <TwoItemsContainer>
+                    <div className="relative z-0 mb-6 w-full md:w-[49%] group">
+                        <input type="text"
+                            value={property}
+                            className={classes.input} readOnly />
+                        <label className={classes.label}>Propriété</label>
+                    </div>
+                    <div className="relative z-0 mb-6 w-full md:w-[49%] group">
+                        <input type="text"
+                            value={agreedAmount}
+                            className={classes.input} readOnly />
+                        <label className={classes.label}>Prix de vente</label>
+                    </div>
+                </TwoItemsContainer>
+
+                <TwoItemsContainer>
+                    <div className="relative z-0 mb-6 w-full md:w-[49%] group">
+                        <input type="text"
+                            value={agreedAmount - rest}
+                            className={classes.input} readOnly />
+                        <label className={classes.label}>total payé</label>
+                    </div>
+                    <div className="relative z-0 mb-6 w-full md:w-[49%] group">
+                        <input type="text"
+                            value={rest}
+                            className={classes.input} readOnly />
+                        <label className={classes.label}>Reste</label>
                     </div>
                 </TwoItemsContainer>
             </Form>
@@ -200,12 +203,6 @@ function Payment({ payment = null, saleDetails = null }) {
     )
 }
 
-const TwoItemsContainer = (props) => {
-    return (
-        <div className="flex flex-col justify-between md:flex-row gap-4 my-3 relative">
-            {props.children}
-        </div>
-    )
-}
+
 
 export default Payment

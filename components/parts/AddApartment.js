@@ -1,9 +1,9 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { toast, ToastContainer } from 'react-nextjs-toast'
 
 import { Form } from './index'
 import fetch from '../../helpers/fetch-data';
-import Loader from './Loader';
+import { Loader, TwoItemsContainer } from './';
 import AddLodging from './AddLodging';
 import { useUserContext } from '../../context/user';
 const classes = {
@@ -17,11 +17,11 @@ function AddApartment({ apartment = null }) {
     //fields
     const [type, setType] = useState(apartment ? apartment.type : 'appartment');
     const [numApartment, setNumApartment] = useState(apartment ? apartment.num_apartment : 0);
-    const [lounge, setLounge] = useState(apartment ? apartment.lounge : '');
-    const [room, setRoom] = useState(apartment ? apartment.room : '');
-    const [toilet, setToilet] = useState(apartment ? apartment.toilet : '');
-    const [cuisine, setCuisine] = useState(apartment ? apartment.cuisine : '');
-    const [lodgingId, setLodgingId] = useState(apartment ? apartment.lodging_id : 1);
+    const [lounge, setLounge] = useState(apartment ? apartment.lounge : 1);
+    const [room, setRoom] = useState(apartment ? apartment.room : 1);
+    const [toilet, setToilet] = useState(apartment ? apartment.toilet : 1);
+    const [cuisine, setCuisine] = useState(apartment ? apartment.cuisine : 1);
+    const [lodgingId, setLodgingId] = useState(apartment ? apartment.lodging_id : 0);
     const [city, setCity] = useState(apartment ? apartment.city : '');
     const [address, setAddress] = useState(apartment ? apartment.address : '');
     const [space, setSpace] = useState(apartment ? apartment.space : '');
@@ -35,7 +35,27 @@ function AddApartment({ apartment = null }) {
 
     const [imagesPreview, setImagesPreview] = useState(apartment ? JSON.parse(apartment?.images) : []);
     let paths = apartment?.images ? JSON.parse(apartment.images) : [];
+    useEffect(() => {
+        if (lodgings.length > 0 && !city) {
+            setCity(lodgings[0].city);
+            setAddress(lodgings[0].address);
+            setLodgingId(lodgings[0].id);
+        }
+    }, [lodgings]);
     //functions
+    const handleLodgingChange = (id = null, data = null) => {
+
+        if (data) {
+            setCity(data.city);
+            setAddress(data.address);
+            return;
+        }
+        //filter lodgings by the id
+        const lodging = lodgings.filter(lodging => lodging.id == id)[0];
+        //set city and address with the current lodging
+        setCity(lodging.city);
+        setAddress(lodging.address);
+    }
     //add
     const saveImages = async () => {
         paths = [];
@@ -64,11 +84,11 @@ function AddApartment({ apartment = null }) {
         const payload = {
 
             'lodging_id': lodgingId,
-            'num_apartment': numApartment,
-            'lounge': lounge,
-            'room': room,
-            'toilet': toilet,
-            'cuisine': cuisine,
+            'num_apartment': type == "appartment" ? numApartment : 0,
+            'lounge': type == "appartment" ? lounge : 0,
+            'room': type == "appartment" ? room : 0,
+            'toilet': type == "appartment" ? toilet : 0,
+            'cuisine': type == "appartment" ? cuisine : 0,
             'type': type,
             'city': city,
             'space': space,
@@ -99,16 +119,14 @@ function AddApartment({ apartment = null }) {
         setIsLoading(true);
         images.length && await saveImages();
 
-        console.log(typeof paths);
-        console.log(images);
 
         const payload = {
             'lodging_id': lodgingId,
-            'num_apartment': numApartment,
-            'lounge': lounge,
-            'room': room,
-            'toilet': toilet,
-            'cuisine': cuisine,
+            'num_apartment': type == "appartment" ? numApartment : 0,
+            'lounge': type == "appartment" ? lounge : 0,
+            'room': type == "appartment" ? room : 0,
+            'toilet': type == "appartment" ? toilet : 0,
+            'cuisine': type == "appartment" ? cuisine : 0,
             'type': type,
             'city': city,
             'space': space,
@@ -149,7 +167,7 @@ function AddApartment({ apartment = null }) {
     return (
         <>
             {isLoading && <Loader />}
-            {showModal && <div className='z-10 absolute left-0 top-0 bg-[#00000030] w-screen h-screen'> <AddLodging setValue={setLodgingId} setShowModal={setShowModal} /></div>}
+            {showModal && <AddLodging setValue={setLodgingId} setShowModal={setShowModal} onCallBack={handleLodgingChange} setIsLoading={setIsLoading} />}
             <Form>
                 <ToastContainer align={"right"} position={"bottom"} />
                 {/* Localisations */}
@@ -188,7 +206,7 @@ function AddApartment({ apartment = null }) {
                             <select className={classes.select + ' rounded-r-none'}
                                 placeholder=" "
                                 value={lodgingId}
-                                onChange={(e) => setLodgingId(e.target.value)}>
+                                onChange={(e) => { setLodgingId(e.target.value), handleLodgingChange(e.target.value) }}>
                                 {lodgings.length && lodgings.map((lodging) => <option key={lodging.id} value={lodging.id}>{lodging.name}</option>)}
                             </select>
                             <svg xmlns="http://www.w3.org/2000/svg" onClick={() => setShowModal(true)} className="h-[34px] mt-4 w-12 rounded-r-lg bg-gray-400 duration-200 cursor-pointer hover:bg-gray-500 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -205,7 +223,8 @@ function AddApartment({ apartment = null }) {
                             value={type}
                             onChange={(e) => setType(e.target.value)}>
                             <option value="appartment">Appartment</option>
-                            <option value="endroit">Endroit</option>
+                            <option value="maison">Maison</option>
+                            <option value="terrain">terrain</option>
                         </select>
                         <label className={classes.label}>Propriété</label>
                     </div>
@@ -221,59 +240,62 @@ function AddApartment({ apartment = null }) {
 
 
 
-                <TwoItemsContainer>
-                    {type == 'appartment' && <> <div className="relative z-0 mb-6 w-full md:w-[49%] group">
-                        <input type="text"
-                            className={classes.input}
-                            placeholder=" "
-                            value={numApartment}
-                            onChange={(e) => { setNumApartment(e.target.value) }} />
-                        <label className={classes.label}>Num Appartement</label>
-                    </div>
-                        <div className="relative z-0 mb-6 w-full md:w-[49%] group">
-                            <input type="text"
-                                className={classes.input}
-                                placeholder=" "
-                                value={class_}
-                                onChange={(e) => { setClass_(e.target.value) }} />
-                            <label className={classes.label}>Étage</label>
-                        </div></>}
-                </TwoItemsContainer>
-                {/* Composants */}
-                <TwoItemsContainer>
-                    <div className="relative z-0 mb-6 w-full md:w-[24%] group">
-                        <input type="text"
-                            className={classes.input}
-                            placeholder=" "
-                            value={lounge}
-                            onChange={(e) => setLounge(e.target.value)} />
-                        <label className={classes.label}>Salon</label>
-                    </div>
-                    <div className="relative z-0 mb-6 w-full md:w-[24%] group">
-                        <input type="text"
-                            className={classes.input}
-                            placeholder=" "
-                            value={room}
-                            onChange={(e) => setRoom(e.target.value)} />
-                        <label className={classes.label}>Chambres</label>
-                    </div>
-                    <div className="relative z-0 mb-6 w-full md:w-[24%] group">
-                        <input type="text"
-                            className={classes.input}
-                            placeholder=" "
-                            value={toilet}
-                            onChange={(e) => setToilet(e.target.value)} />
-                        <label className={classes.label}>Toilettes</label>
-                    </div>
-                    <div className="relative z-0 mb-6 w-full md:w-[24%] group">
-                        <input type="text"
-                            className={classes.input}
-                            placeholder=" "
-                            value={cuisine}
-                            onChange={(e) => setCuisine(e.target.value)} />
-                        <label className={classes.label}>Cuisine</label>
-                    </div>
-                </TwoItemsContainer>
+                {type == 'appartment' &&
+                    <>
+                        <TwoItemsContainer>
+                            <div className="relative z-0 mb-6 w-full md:w-[49%] group">
+                                <input type="text"
+                                    className={classes.input}
+                                    placeholder=" "
+                                    value={numApartment}
+                                    onChange={(e) => { setNumApartment(e.target.value) }} />
+                                <label className={classes.label}>Num Appartement</label>
+                            </div>
+                            <div className="relative z-0 mb-6 w-full md:w-[49%] group">
+                                <input type="text"
+                                    className={classes.input}
+                                    placeholder=" "
+                                    value={class_}
+                                    onChange={(e) => { setClass_(e.target.value) }} />
+                                <label className={classes.label}>Étage</label>
+                            </div>
+                        </TwoItemsContainer>
+                        <TwoItemsContainer>
+                            <div className="relative z-0 mb-6 w-full md:w-[24%] group">
+                                <input type="text"
+                                    className={classes.input}
+                                    placeholder=" "
+                                    value={lounge}
+                                    onChange={(e) => setLounge(e.target.value)} />
+                                <label className={classes.label}>Salon</label>
+                            </div>
+                            <div className="relative z-0 mb-6 w-full md:w-[24%] group">
+                                <input type="text"
+                                    className={classes.input}
+                                    placeholder=" "
+                                    value={room}
+                                    onChange={(e) => setRoom(e.target.value)} />
+                                <label className={classes.label}>Chambres</label>
+                            </div>
+                            <div className="relative z-0 mb-6 w-full md:w-[24%] group">
+                                <input type="text"
+                                    className={classes.input}
+                                    placeholder=" "
+                                    value={toilet}
+                                    onChange={(e) => setToilet(e.target.value)} />
+                                <label className={classes.label}>Toilettes</label>
+                            </div>
+                            <div className="relative z-0 mb-6 w-full md:w-[24%] group">
+                                <input type="text"
+                                    className={classes.input}
+                                    placeholder=" "
+                                    value={cuisine}
+                                    onChange={(e) => setCuisine(e.target.value)} />
+                                <label className={classes.label}>Cuisine</label>
+                            </div>
+                        </TwoItemsContainer>
+                    </>
+                }
                 <TwoItemsContainer>
                     <div className="relative z-0 mb-6 w-full md:w-[49%] group">
                         <input type="text"
@@ -281,7 +303,7 @@ function AddApartment({ apartment = null }) {
                             placeholder=" "
                             value={space}
                             onChange={(e) => { setSpace(e.target.value) }} />
-                        <label className={classes.label}>Espace</label>
+                        <label className={classes.label}>superficié</label>
                     </div>
 
                     <div className="relative z-0 -mt-[6px] w-full md:w-[49%] group">
@@ -333,12 +355,6 @@ function AddApartment({ apartment = null }) {
         </>
     )
 }
-const TwoItemsContainer = (props) => {
-    return (
-        <div className="flex flex-col justify-between md:flex-row gap-4 my-3 relative">
-            {props.children}
-        </div>
-    )
-}
+
 
 export default AddApartment

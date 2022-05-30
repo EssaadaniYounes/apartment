@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-.test{
-    width: var(--width);
+@media print{
+    .not-print{
+        display: none;
+    }
 }

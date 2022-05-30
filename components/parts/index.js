@@ -14,4 +14,8 @@ export { default as Notifications } from './Notifications';
 export { default as Notification } from './Notification';
 export { default as Statistics } from './Statistics';
 export { default as BarChart } from './BarChart';
+export { default as Project } from './Project';
+export { default as ProjectDetails } from './ProjectDetails';
+export { default as SoldedProperties } from './SoldedProperties';
+export { default as TwoItemsContainer } from './TwoItemsContainer';
 
