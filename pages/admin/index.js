@@ -31,14 +31,10 @@ export async function getServerSideProps(ctx) {
   const apartments = await fetch('properties', 'get', {}, token);
   const payments = await fetch('payments', 'get', {}, token);
   const clients = await fetch('clients', 'get', {}, token);
-  //const data = await AutoLogin(ctx);
+  const data = await AutoLogin(ctx);
   return {
     props: {
-      dataUser: {
-        email: 'younes@gmail.com',
-        password: '1234',
-        name: 'Younes',
-      },
+      dataUser: data.dataUser,
       sales: response.data,
       clients: clients.data,
       apartments: apartments.data,
