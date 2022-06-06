@@ -132,6 +132,7 @@ function Clients({ dataUser, dataClients }) {
 }
 
 export async function getServerSideProps(ctx) {
+  
   const token = ctx.req.cookies != undefined ? ctx.req.cookies.token : '';
   const response = await fetch('clients', 'get', {}, token);
   const data = await AutoLogin(ctx);

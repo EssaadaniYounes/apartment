@@ -10,7 +10,7 @@ function index({ newLodgings, user }) {
     const [isDeleting, setIsDeleting] = useState(false);
     const [showAddLodging, setShowAddLodging] = useState(false);
     const { setLodgings, setUser, lodgings } = useUserContext();
-    const permission = user.roles.permissions.projets;
+    const permission = user?.roles?.permissions?.projets;
 
     useEffect(() => {
         if (user) {

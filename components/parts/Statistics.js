@@ -96,7 +96,7 @@ const ApartmentsBoughts = ({ apartments }) => {
                 </p>
             </div>
             <p className='w-full h-3 rounded-lg mt-2 bg-gray-300 relative'>
-                <span className='test h-3 rounded-lg bg-yellow-400 absolute' style={{ '--width': width + '%' }}></span>
+                <span className='test h-3 rounded-lg bg-yellow-400 absolute' style={{ 'width': width + '%' }}></span>
             </p>
         </div >
     )
