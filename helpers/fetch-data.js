@@ -2,12 +2,14 @@ import axios from 'axios';
 
 
 // const domaine = "http://127.0.0.1:8000/api/";
-const domaine = "http://meatmarketdanish.com/apt/api/";
+const domaine = "https://cors-everywhere.herokuapp.com/http://meatmarketdanish.com/apt/api/";
 
 const fetch = async (request, method, data, token) => {
     const request_header =
     {
         'Accept': 'application/json',
+        "origin": "http://meatmarketdanish.com",
+        "x-requested-with": "XMLHttpRequest",
         'Authorization': `Bearer ${token}`
     }
 
