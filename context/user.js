@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from "react";
 const UserContext = createContext();
 
 export default function UserWrapper({ children }) {
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState([]);
     const [users, setUsers] = useState([]);
     const [lodgings, setLodgings] = useState([]);
     const [apartments, setApartments] = useState([]);
