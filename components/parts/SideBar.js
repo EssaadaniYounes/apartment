@@ -13,7 +13,7 @@ const classes = {
 const SideBar = () => {
 
     const { user } = useUserContext();
-    const permissions = typeof user?.roles?.permissions == undefined ? [] : user.roles.permissions;
+    const permissions = user != null ? user.roles.permissions : null;
 
     return (
         <div className="not-print w-[16%] bg-[#343a40] text-[#c2c7d0] h-screen pt-1 md:pl-4 shadow-xl z-30">

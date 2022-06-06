@@ -13,6 +13,7 @@ export async function AutoLogin(ctx) {
         if (response.data.roles?.permissions) {
             response.data.roles.permissions = JSON.parse(response.data?.roles?.permissions);
         }
+        console.log(response);
         return {
             dataUser: response.data != undefined ? response.data : {
                 email: 'younes@gmail.com',
