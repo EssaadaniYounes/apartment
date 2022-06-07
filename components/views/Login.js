@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useState, useRef } from 'react'
 import { useUserContext } from '../../context/user';
@@ -33,11 +34,9 @@ function Login() {
     }
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
-            <div className="px-8 py-6 mt-4 text-left bg-white shadow-lg">
-                <div className="flex justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-20 w-20" fill="none" viewBox="0 0 24 24" stroke="#8858e9" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                    </svg>
+            <div className="px-8 py-6 mt-2 text-left bg-white shadow-lg">
+                <div className="relative flex items-center justify-center">
+                    <Image src={'/images/logo.png'} width={160} height={150}/>
                 </div>
                 <h3 className="text-2xl font-semibold text-center text-gray-700">Connectez-vous au compte</h3>
                 <div>
