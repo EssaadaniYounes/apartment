@@ -17,8 +17,8 @@ function Container(props) {
     return (
         router.pathname &&
         <div className='flex overflow-y-hidden max-h-screen'>
-            {router.pathname != "/auth" && <SideBar />}
-            <div className={`flex-1  z-0 ${undisplayedRoutes.includes(router.pathname) ? 'max-w-[100%]' : 'max-w-[84%]'}`}>
+                {router.pathname != "/auth" && <div className=' bg-white relative w-[16%]'><SideBar /></div>}
+            <div className={`flex-1 z-0 ${undisplayedRoutes.includes(router.pathname) ? 'max-w-[100%]' : 'max-w-[84%]'}`}>
                 {router.pathname != "/auth" && <Header />}
                 {router.pathname != "/auth" && < Notifications />}
                 <div className='max-h-screen overflow-y-auto pb-[5rem]'>

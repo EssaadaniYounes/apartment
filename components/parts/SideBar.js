@@ -6,7 +6,7 @@ import { useUserContext } from '../../context/user';
 const classes = {
     links: 'w-full flex flex-col items-start justify-start mt-6 text-sm font-semibold',
     icon: 'h-6 w-6',
-    link: 'w-full flex gap-2 justify-center md:justify-start items-center my-3 duration-200 hover:text-gray-500',
+    link: 'w-full flex gap-2 justify-center text-black md:justify-start items-center my-3 duration-200 hover:text-gray-500',
     span: 'hidden md:block'
 }
 
@@ -16,11 +16,11 @@ const SideBar = () => {
     const permissions = user != null ? user.roles.permissions : null;
 
     return (
-        <div className="not-print w-[16%] bg-[#343a40] text-[#c2c7d0] h-screen pt-1 md:pl-4 shadow-xl z-30">
+        <div className="not-print text-[#c2c7d0] h-screen fixed  w-[16%] top-0 pt-1 md:pl-4 shadow-xl z-30">
             <div className="w-full h-[50px] flex items-center flex-row-reverse justify-between gap-2">
-                <span className="flex-1 text-[15px] font-semibold hidden md:block">
+                <span className="flex-1 text-black text-[15px] font-semibold hidden md:block">
                     Group Nhaila</span>
-                <img src={'/images/logo.png'} className='w-full md:h-[40px] h-full md:w-[40px]' />
+                <img src={'/images/logo.png'} className='w-full md:h-[50px] h-full md:w-[50px]' />
             </div>
             <div className={classes.links}>
                 {

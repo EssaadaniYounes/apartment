@@ -3,16 +3,22 @@ import { toast, ToastContainer } from 'react-nextjs-toast'
 import { Loader, TwoItemsContainer, Form } from './';
 import { useUserContext } from '../../context/user';
 import fetch from '../../helpers/fetch-data';
+import Modal from './Modal';
+import Client from './Client';
+import AddApartment from './AddApartment';
 
 const classes = {
     label: 'absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6',
     input: 'block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer',
+    select: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 block w-full mt-4 p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500',
 }
 function Sale({ sale = null }) {
 
     const { apartments, clients, user, setSales } = useUserContext();
     //fields
     const [isLoading, setIsLoading] = useState(false);
+    const [showClientModal, setShowClientModal] = useState(false);
+    const [showPropertyModal, setShowPropertyModal] = useState(false);
     const [saleType, setSaleType] = useState(sale ? sale.sale_type : '');
     const [dateSale, setDateSale] = useState(sale ? sale.date_sale : '');
     const [clientId, setClientId] = useState(sale ? sale.client_id : '');
@@ -109,6 +115,18 @@ function Sale({ sale = null }) {
         <>
             {isLoading && <Loader />}
             <ToastContainer align={"right"} position={"bottom"} />
+            {/* client modal */}
+            {showClientModal &&
+                <Modal setShowModal={setShowClientModal}>
+                    <Client setShowModal={setShowClientModal} setClient={setClientId}></Client>
+                </Modal>
+            }
+            {/* property modal */}
+            {showPropertyModal &&
+                <Modal setShowModal={setShowPropertyModal}>
+                    <AddApartment setModal={setShowPropertyModal} setProperty={setPropertyId}></AddApartment>
+                </Modal>
+            }
             <Form>
                 <TwoItemsContainer>
                     <div className="relative z-0 mb-6 w-full md:w-[49%] group">
@@ -130,29 +148,40 @@ function Sale({ sale = null }) {
                 </TwoItemsContainer>
                 <TwoItemsContainer>
                     <div className="relative z-0 mb-6 w-full md:w-[49%] group">
-                        <select className={classes.input}
-                            value={clientId}
-                            onChange={(e) => setClientId(e.target.value)}>
-                            <option disabled defaultChecked value={''}>Choisir Un Client</option>
-                            {
-                                clients.length && clients.map(client => {
-                                    return <option value={client.id} key={client.id}>{client.name}</option>
-                                })
-                            }
-                        </select>
+                        <div className='flex relative items-center'>
+
+                            <select className={classes.select}
+                                value={clientId}
+                                onChange={(e) => setClientId(e.target.value)}>
+                                <option disabled defaultChecked value={''}>Choisir Un Client</option>
+                                {
+                                    clients.length && clients.map(client => {
+                                        return <option value={client.id} key={client.id}>{client.name}</option>
+                                    })
+                                }
+                            </select>
+                            <svg xmlns="http://www.w3.org/2000/svg" onClick={() => setShowClientModal(true)} className="h-[34px] mt-4 w-12 rounded-r-lg bg-gray-400 duration-200 cursor-pointer hover:bg-gray-500 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
                         <label className={classes.label}>Client</label>
                     </div>
                     <div className="relative z-0 mb-6 w-full md:w-[49%] group">
-                        <select className={classes.input}
-                            value={propertyId}
-                            onChange={(e) => { setPropertyId(e.target.value); getAmount(e.target.value) }}>
-                            <option disabled defaultChecked value={''}>Choisir Un Propriété</option>
-                            {
-                                apartments.length && apartments.map(apartment => {
-                                    return <option value={apartment.id} key={apartment.id}>{apartment.city + '/' + apartment.type + '/' + (apartment.type == 'appartment' ? apartment.num_apartment : '')}</option>
-                                })
-                            }
-                        </select>
+                        <div className='flex relative items-center'>
+                            <select className={classes.select}
+                                value={propertyId}
+                                onChange={(e) => { setPropertyId(e.target.value); getAmount(e.target.value) }}>
+                                <option disabled defaultChecked value={''}>Choisir Un Propriété</option>
+                                {
+                                    apartments.length && apartments.map(apartment => {
+                                        return <option value={apartment.id} key={apartment.id}>{apartment.city + '/' + apartment.type + '/' + (apartment.type == 'appartment' ? apartment.num_apartment : '')}</option>
+                                    })
+                                }
+                            </select>
+                            <svg xmlns="http://www.w3.org/2000/svg" onClick={() => setShowPropertyModal(true)} className="h-[34px] mt-4 w-12 rounded-r-lg bg-gray-400 duration-200 cursor-pointer hover:bg-gray-500 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
                         <label className={classes.label}>Propiétié</label>
                     </div>
                 </TwoItemsContainer>

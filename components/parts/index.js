@@ -18,4 +18,5 @@ export { default as Project } from './Project';
 export { default as ProjectDetails } from './ProjectDetails';
 export { default as SoldedProperties } from './SoldedProperties';
 export { default as TwoItemsContainer } from './TwoItemsContainer';
+export { default as Modal } from './Modal';
 

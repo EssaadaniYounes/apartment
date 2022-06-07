@@ -12,8 +12,8 @@ const classes = {
     select: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full mt-4 p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500',
 }
 
-function AddApartment({ apartment = null }) {
-    const { lodgings } = useUserContext();
+function AddApartment({ apartment = null, setModal = null, setProperty = null }) {
+    const { lodgings, setApartments } = useUserContext();
     //fields
     const [type, setType] = useState(apartment ? apartment.type : 'appartment');
     const [numApartment, setNumApartment] = useState(apartment ? apartment.num_apartment : 0);
@@ -106,6 +106,9 @@ function AddApartment({ apartment = null }) {
                 duration: 2,
                 type: "success"
             })
+            setApartments(v => [...v, response.data]);
+            setProperty && setProperty(response.data.id);
+            setModal && setModal(false);
         } else {
             toast.notify(response.error, {
                 duration: 2,
