@@ -26,10 +26,11 @@ function Project({ lodging, onNotify, setIsLoading }) {
 
     return (
         <>
+
             {showModal && <AddLodging setShowModal={setShowModal} lodging={lodging} setIsLoading={setIsLoading} />}
             <div className='relative bg-blue-100 rounded-md overflow-hidden h-[310px] max-h-[420px] shadow-sm'>
                 <div className='w-full max-h-[60%] relative h-[200px]' >
-                    <Image src={lodging.image} layout='fill' alt="" />
+                    <Image src={lodging.image} layout='fill' alt="" priority />
                 </div>
                 <div className='mt-4 px-4'>
                     <h1 className='font-semibold text-center'>{lodging.name}</h1>
@@ -59,14 +60,6 @@ function Project({ lodging, onNotify, setIsLoading }) {
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                             </svg>
                         </span>}
-                        {can(permission, 'read') && <Link href={`lodgings/${lodging.id}`}>
-                            <a>
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-300 duration-100 hover:text-blue-500 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                </svg>
-                            </a>
-                        </Link>}
                     </div>
                 </div>
             </div>

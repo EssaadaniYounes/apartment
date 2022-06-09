@@ -3,6 +3,7 @@ import { toast, ToastContainer } from 'react-nextjs-toast'
 import { Loader, TwoItemsContainer, Form } from './';
 import { useUserContext } from '../../context/user';
 import fetch from '../../helpers/fetch-data';
+import CurrentDate from '../../helpers/today';
 import Modal from './Modal';
 import Client from './Client';
 import AddApartment from './AddApartment';
@@ -13,14 +14,13 @@ const classes = {
     select: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 block w-full mt-4 p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500',
 }
 function Sale({ sale = null }) {
-
     const { apartments, clients, user, setSales } = useUserContext();
     //fields
     const [isLoading, setIsLoading] = useState(false);
     const [showClientModal, setShowClientModal] = useState(false);
     const [showPropertyModal, setShowPropertyModal] = useState(false);
     const [saleType, setSaleType] = useState(sale ? sale.sale_type : '');
-    const [dateSale, setDateSale] = useState(sale ? sale.date_sale : '');
+    const [dateSale, setDateSale] = useState(sale ? sale.date_sale : CurrentDate());
     const [clientId, setClientId] = useState(sale ? sale.client_id : '');
     const [propertyId, setPropertyId] = useState(sale ? sale.property_id : '');
     const [agreedAmount, setAgreedAmount] = useState(sale ? sale.agreed_amount : 0);

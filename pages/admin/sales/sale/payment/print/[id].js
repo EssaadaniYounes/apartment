@@ -1,23 +1,27 @@
 import Image from 'next/image';
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useUserContext } from '../../../../../../context/user';
 import { AutoLogin } from '../../../../../../helpers/auto-login';
+import toWords from '../../../../../../helpers/format-money';
 import fetch from '../../../../../../helpers/fetch-data';
 function Print({ printData, dataUser }) {
-  console.log(printData, dataUser);
-
+  const {setUser}=useUserContext()
+  useEffect(() => {
+    setUser(dataUser)
+  },[])
   return (
     <div className='mx-auto'>
       <div className='mt-12 max-w-[21cm] mx-auto h-1/2 border-dashed border-2 py-6 px-[1cm]'>
         <div className='flex'>
           <Image src={'/images/logo.png'} width={80} height={80} priority />
           <div className='flex-1 text-center'>
-            <h1 className='w-fit border-b-2 mx-auto font-bold'>{printData[0].name} <br /> {printData[0].city} </h1>
+            <h1 className='w-fit border-b-2 mx-auto font-bold'>{printData[0].lodging_name} <br /> {printData[0].city} </h1>
           </div>
         </div>
         {/* <h1 className="text-xl text-center font-semibold underline">
-          Reçu pour N° : <span>{printData[0].num_payment}</span>
-        </h1> */}
-        <div className='text-center grid mt-4 grid-cols-1 md:grid-cols-2 gap-2'>
+        Reçu pour N° : <span>{printData[0].id}</span>
+      </h1> */}
+        <div className='text-center grid mt-4 grid-cols-1 md:grid-cols-2 gap-8'>
           <div>
             <span className="font-semibold">Client :</span> {printData[0].client_name}
           </div>
@@ -28,7 +32,7 @@ function Print({ printData, dataUser }) {
             <span className="font-semibold">La Somme en chiffres :</span> {printData[0].amount} DH
           </div>
           <div>
-            <span className="font-semibold">La Somme en letter :</span> {printData[0].cin}
+            <span className="font-semibold">La Somme en letter :</span> {toWords(printData[0].amount)} Dirham
           </div>
           <div>
             <span className="font-semibold">Objet :</span>
@@ -56,8 +60,9 @@ function Print({ printData, dataUser }) {
 }
 export async function getServerSideProps(ctx) {
   const { id } = ctx.params;
-  const data = await fetch(`payment/print/${id}`, 'get', {}, ctx.req.cookies.token);
   const res = await AutoLogin(ctx);
+  const data = await fetch(`payment/print/${id}`, 'get', {}, ctx.req.cookies.token);
+  console.log(data.data)
   return {
     props: {
       printData: data.data,

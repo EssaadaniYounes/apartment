@@ -9,6 +9,6 @@ export const getNextPayment = (client, nextPayments) => {
             return new Date(acc.next_payment) > new Date(cur.next_payment) ? acc.next_payment : cur.next_payment;
         });
     }
-    return payment;
+    return payment[0];
 
 }

@@ -5,6 +5,7 @@ import { AutoLogin } from '../../../helpers/auto-login';
 import { useUserContext } from '../../../context/user';
 import { AddLodging, Loader, Project, TablesHeader } from '../../../components/parts';
 import { can } from '../../../helpers/can';
+import Link from 'next/link';
 
 function index({ newLodgings, user }) {
     const [isDeleting, setIsDeleting] = useState(false);
@@ -69,7 +70,15 @@ function index({ newLodgings, user }) {
             {showAddLodging && <AddLodging setShowModal={setShowAddLodging} setIsLoading={setIsDeleting} />}
             <div className='mx-4 mt-2 items-center gap-y-3 grid gap-x-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
                 {
-                    lodgings.map(lodging => <Project key={lodging.id} lodging={lodging} onNotify={notify} setIsLoading={setIsDeleting} />)
+                    lodgings.map(lodging =>
+                        can(permission, 'read') ?
+                            <Link href={`/admin/lodgings/${lodging.id}`} key={lodging.id}>
+                                <a>
+                                    <Project lodging={lodging} onNotify={notify} setIsLoading={setIsDeleting} />
+                                </a>
+                            </Link>
+                            : <Project key={lodging.id} lodging={lodging} onNotify={notify} setIsLoading={setIsDeleting} />
+                    )
                 }
             </div>
         </>

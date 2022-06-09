@@ -60,6 +60,12 @@ export default function Apartments({ dataUser, dataApartments }) {
 
         },
         {
+            name: 'Projet',
+            selector: row => row.name,
+            sortable: true,
+
+        },
+        {
             name: 'Ville',
             selector: row => row.city,
             sortable: true,
@@ -142,6 +148,7 @@ export async function getServerSideProps(ctx) {
     const token = ctx.req.cookies != undefined ? ctx.req.cookies.token : '';
     const response = await fetch('properties', 'get', {}, token);
     const data = await AutoLogin(ctx);
+    console.log(response.data)
     return {
         props: {
             dataUser: data.dataUser,
