@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { toast, ToastContainer } from 'react-nextjs-toast'
 
-import { TablesHeader, CustomDataTable, Loader } from '../../../components/parts';
+import { TablesHeader, CustomDataTable, Loader, Base64Image } from '../../../components/parts';
 
 import { useUserContext } from '../../../context/user';
 import fetch from '../../../helpers/fetch-data';
 import { AutoLogin } from '../../../helpers/auto-login';
 import { can } from '../../../helpers/can';
+import getBase64 from '../../../helpers/get-image';
 
 
 export default function Apartments({ dataUser, dataApartments }) {
@@ -16,7 +17,7 @@ export default function Apartments({ dataUser, dataApartments }) {
     const columns = [
         {
             name: "#",
-            cell: (row, index) => <img src={JSON.parse(row.images)[0] || '/images/unknown.png'} />,
+            cell: (row, index) => <Base64Image image={JSON.parse(row.images)[0]} />,
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
@@ -117,6 +118,8 @@ export default function Apartments({ dataUser, dataApartments }) {
             setUser(dataUser);
             setApartments(dataApartments);
         }
+        //Map to aparmtent and parse images to json and get first image 
+
     }, []);
 
     return (

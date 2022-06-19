@@ -1,4 +1,4 @@
-export default async function getBase64(url, ref) {
+export default async function getBase64(url, ref = null, id = null) {
     const data = await fetch(
         'https://cors-everywhere.herokuapp.com/' + url,
         {
@@ -16,7 +16,9 @@ export default async function getBase64(url, ref) {
         reader.onloadend = () => {
             base64data = reader.result;
             resolve(base64data);
-            ref.current.src = base64data;
+            ref && (ref.current.src = base64data);
+            id && (document.querySelector(`#${id}`).src = base64data);
         }
     });
+    return base64data;
 }

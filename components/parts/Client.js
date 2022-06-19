@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { toast, ToastContainer } from 'react-nextjs-toast'
 
 import { Form } from './index'
+import { Base64Image } from './'
 import fetch from '../../helpers/fetch-data';
 import { Loader, TwoItemsContainer } from './';
 import Image from 'next/image';
@@ -22,7 +23,7 @@ function Client({ client = null, setShowModal = null, setClient = null }) {
     const [phoneSecond, setPhoneSecond] = useState(client ? client.phone_second : '');
     const [cin, setCin] = useState(client ? client.cin : '');
     const [images, setImages] = useState([]);
-    const [imagesPreview, setImagesPreview] = useState(client ? JSON.parse(client?.images) : '');
+    const [imagesPreview, setImagesPreview] = useState(client && JSON.parse(client?.images) != null ? JSON.parse(client?.images) : []);
     let paths = client?.images ? client.images : '';
 
     //functions
@@ -109,6 +110,7 @@ function Client({ client = null, setShowModal = null, setClient = null }) {
         };
 
     }
+    console.log(imagesPreview, client);
     let imgsPreview = [];
     const handlePreview = (e) => {
         setImages(e.target.files);
@@ -197,9 +199,9 @@ function Client({ client = null, setShowModal = null, setClient = null }) {
                 </TwoItemsContainer>
             </Form>
             {imagesPreview.length > 0 &&
-                <div className="relative flex items-center flex-wrap gap-8 justify-center mt-6">
+                <div className="relative flex items-center flex-wrap gap-8 justify-center mt-6 mb-12">
                     {imagesPreview.map((image, index) => {
-                        return <Image key={index} width={300} height={150} style={{ borderRadius: 15 }} src={image} priority />
+                        return <div key={index} className='w-[300px] h-[200px] rounded-md overflow-hidden bg-white shadow-sm'> <Base64Image image={image} /> </div>
                     })}
                 </div>
             }
