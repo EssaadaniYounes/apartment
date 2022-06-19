@@ -17,10 +17,9 @@ function plan({ lodging, dataUser }) {
             const base64data = await getBase64(url, ref);
             return base64data;
         }
-        // if (lodging.image) {
-        //     getImageUrl(`${lodging.plan}`, object)
-        //     getImageUrl(`${lodging.plan}`, embed)
-        // }
+        getImageUrl(`${lodging.plan}`, object)
+        getImageUrl(`${lodging.plan}`, embed)
+
     }, []);
     return (
         <div className='flex flex-col px-4 gap-y-6'>
@@ -34,11 +33,12 @@ function plan({ lodging, dataUser }) {
                     </a>
                 </Link>
             </div>
-
-            <object data="https://drive.google.com/file/d/1ZKgZhUuBr_-nLnbpExhQmqKCx_1QqxT2/preview" width="600" height="500">
-                <embed src="https://drive.google.com/file/d/1ZKgZhUuBr_-nLnbpExhQmqKCx_1QqxT2/preview" width="600px" height="500px" />
-                <p>This browser does not support PDFs. Please download the PDF to view it: <a href="https://drive.google.com/file/d/1ZKgZhUuBr_-nLnbpExhQmqKCx_1QqxT2/preview">View the PDF</a>.</p>
-            </object>
+            {(object && embed &&
+                < object ref={object} width="600" height="500">
+                    <embed ref={embed} width="600px" height="500px" />
+                    <p>This browser does not support PDFs. Please download the PDF to view it: <a href="https://drive.google.com/file/d/1ZKgZhUuBr_-nLnbpExhQmqKCx_1QqxT2/preview">View the PDF</a>.</p>
+                </object>
+            )}
         </div >
     )
 }
