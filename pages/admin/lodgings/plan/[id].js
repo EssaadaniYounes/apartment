@@ -20,7 +20,6 @@ function plan({ lodging, dataUser }) {
         if (lodging.image) {
             getImageUrl(`${lodging.plan}`, object)
             getImageUrl(`${lodging.plan}`, embed)
-            getImageUrl(`${lodging.plan}`, link)
         }
     }, []);
     return (
@@ -36,10 +35,9 @@ function plan({ lodging, dataUser }) {
                 </Link>
             </div>
 
-            <object ref={object} className='w-full '>
-                <embed ref={embed} className='w-full' />
-                <p>This browser does not support PDFs. Please download the PDF to view it: <a href={lodging.plan}>View the PDF</a>.</p>
-            </object>
+            <object ref={object} className='w-full h-full ' />
+            <embed ref={embed} className='w-full h-full' />
+            <p>This browser does not support PDFs. Please download the PDF to view it: <a href={lodging.plan}>View the PDF</a>.</p>
 
         </div >
     )
