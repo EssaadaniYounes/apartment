@@ -51,12 +51,6 @@ function index({ dataPayments, dataUser, dataClients }) {
             button: true,
         },
         {
-            name: 'Num Payment',
-            selector: row => row.num_payment,
-            sortable: true,
-
-        },
-        {
             name: 'Client',
             selector: row => row.name,
             sortable: true,

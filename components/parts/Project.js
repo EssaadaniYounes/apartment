@@ -1,17 +1,16 @@
-import React, { useState } from 'react'
-import Image from 'next/image';
-
-import Link from 'next/link';
+import React, { useEffect, useRef, useState } from 'react'
 import fetch from '../../helpers/fetch-data';
 import { useUserContext } from '../../context/user';
 import AddLodging from './AddLodging';
 import { can } from '../../helpers/can';
+import getBase64 from '../../helpers/get-image';
 import { useRouter } from 'next/router';
 function Project({ lodging, onNotify, setIsLoading }) {
     const { setLodgings, lodgings, user } = useUserContext();
     const permission = user.roles.permissions.projets;
     const router = useRouter();
     const [showModal, setShowModal] = useState(false);
+    const ref = useRef(null);
     const deleteLodging = async () => {
         if (confirm('Voulez-vous vraiment supprimer ce projet ?')) {
             setIsLoading(true);
@@ -20,19 +19,28 @@ function Project({ lodging, onNotify, setIsLoading }) {
                 const newLodgings = lodgings.filter(l => l.id != lodging.id)
                 setLodgings(newLodgings);
                 onNotify();
-                router.reload();
             }
             setIsLoading(false);
         }
     }
-
+    useEffect(() => {
+        const getImageUrl = async (url, ref) => {
+            const base64data = await getBase64(url, ref);
+            return base64data;
+        }
+        if (lodging.image) {
+            getImageUrl(`${lodging.image}`, ref)
+        }
+    }, []);
     return (
         <>
 
             {showModal && <AddLodging setShowModal={setShowModal} lodging={lodging} setIsLoading={setIsLoading} />}
-            <div className='relative bg-blue-100 rounded-md overflow-hidden h-[310px] max-h-[420px] shadow-sm'>
+            <div className='relative bg-blue-100 rounded-md overflow-hidden h-[310px] max-h-[420px] shadow-md'>
                 <div className='w-full max-h-[60%] relative h-[200px]' >
-                    <img src={lodging.image} alt="Image Not Found" />
+                    {/* <img src={lodging.image} alt="Image Not Found" /> */}
+                    <img loading='lazy' ref={ref} src={`/images/unknown.png`} alt="Inconnu" layout='fill' className='h-[110%] w-full mx-auto' />
+
                 </div>
                 <div className='mt-4 px-4'>
                     <h1 className='font-semibold text-center'>{lodging.name}</h1>
