@@ -1,13 +1,23 @@
 import Link from 'next/link';
 import React, { useEffect } from 'react'
+import { useRef } from 'react';
 import { useUserContext } from '../../../../context/user';
 import { AutoLogin } from '../../../../helpers/auto-login';
 import fetch from '../../../../helpers/fetch-data'
+import getBase64 from '../../../../helpers/get-image';
 
 function plan({ lodging, dataUser }) {
     const { setUser } = useUserContext();
+    const ref = useRef(null);
     useEffect(() => {
         setUser(dataUser);
+        const getImageUrl = async (url, ref) => {
+            const base64data = await getBase64(url, ref);
+            return base64data;
+        }
+        if (lodging.image) {
+            getImageUrl(`${lodging.plan}`, ref)
+        }
     }, []);
     return (
         <div className='flex flex-col px-4 gap-y-6'>
@@ -22,7 +32,7 @@ function plan({ lodging, dataUser }) {
                 </Link>
             </div>
 
-            <iframe src={lodging.plan} className='w-full h-screen ' frameBorder="0"></iframe>
+            <iframe ref={ref} className='w-full h-screen ' frameBorder="0"></iframe>
         </div>
     )
 }
