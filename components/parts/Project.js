@@ -5,11 +5,12 @@ import Link from 'next/link';
 import fetch from '../../helpers/fetch-data';
 import { useUserContext } from '../../context/user';
 import AddLodging from './AddLodging';
-import Loader from './Loader';
 import { can } from '../../helpers/can';
+import { useRouter } from 'next/router';
 function Project({ lodging, onNotify, setIsLoading }) {
     const { setLodgings, lodgings, user } = useUserContext();
     const permission = user.roles.permissions.projets;
+    const router = useRouter();
     const [showModal, setShowModal] = useState(false);
     const deleteLodging = async () => {
         if (confirm('Voulez-vous vraiment supprimer ce projet ?')) {
@@ -19,6 +20,7 @@ function Project({ lodging, onNotify, setIsLoading }) {
                 const newLodgings = lodgings.filter(l => l.id != lodging.id)
                 setLodgings(newLodgings);
                 onNotify();
+                router.reload();
             }
             setIsLoading(false);
         }
@@ -30,7 +32,7 @@ function Project({ lodging, onNotify, setIsLoading }) {
             {showModal && <AddLodging setShowModal={setShowModal} lodging={lodging} setIsLoading={setIsLoading} />}
             <div className='relative bg-blue-100 rounded-md overflow-hidden h-[310px] max-h-[420px] shadow-sm'>
                 <div className='w-full max-h-[60%] relative h-[200px]' >
-                    <Image src={lodging.image} layout='fill' alt="" priority />
+                    <img src={lodging.image} alt="Image Not Found" />
                 </div>
                 <div className='mt-4 px-4'>
                     <h1 className='font-semibold text-center'>{lodging.name}</h1>
@@ -48,7 +50,7 @@ function Project({ lodging, onNotify, setIsLoading }) {
                         {lodging.address}
                     </div>
                 </div>
-                <div className='absolute -bottom-2 w-full bg-blue-50 h-[40px] py-2'>
+                <div className='absolute -bottom-2 w-full bg-blue-50 h-[40px] py-2 z-50'>
                     <div className='flex items-center justify-around'>
                         {can(permission, 'update') && < span className='cursor-pointer' onClick={() => setShowModal(true)}>
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-orange-400 duration-100 hover:text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
