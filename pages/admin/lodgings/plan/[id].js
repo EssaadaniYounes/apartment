@@ -17,8 +17,6 @@ function plan({ lodging, dataUser }) {
             const base64data = await getBase64(url, ref);
             return base64data;
         }
-        getImageUrl(`${lodging.plan}`, object)
-        getImageUrl(`${lodging.plan}`, embed)
 
     }, []);
     return (
@@ -33,12 +31,7 @@ function plan({ lodging, dataUser }) {
                     </a>
                 </Link>
             </div>
-            {(object && embed &&
-                < object ref={object} width="600" height="500">
-                    <embed ref={embed} width="600px" height="500px" />
-                    <p>This browser does not support PDFs. Please download the PDF to view it: <a href="https://drive.google.com/file/d/1ZKgZhUuBr_-nLnbpExhQmqKCx_1QqxT2/preview">View the PDF</a>.</p>
-                </object>
-            )}
+            <a href="facebook.com" target={'_blank'}>facebook</a>
         </div >
     )
 }
