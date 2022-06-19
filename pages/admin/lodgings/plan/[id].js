@@ -38,7 +38,7 @@ function plan({ lodging, dataUser }) {
 
             <object ref={object} width="600" height="500">
                 <embed ref={embed} width="600px" height="500px" />
-                <p>This browser does not support PDFs. Please download the PDF to view it: <a ref={link}>View the PDF</a>.</p>
+                <p>This browser does not support PDFs. Please download the PDF to view it: <a href={lodging.plan}>View the PDF</a>.</p>
             </object>
 
         </div >
