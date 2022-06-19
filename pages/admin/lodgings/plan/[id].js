@@ -31,8 +31,7 @@ function plan({ lodging, dataUser }) {
                     </a>
                 </Link>
             </div>
-
-            <iframe ref={ref} className='w-full h-screen ' frameBorder="0"></iframe>
+            <embed ref={ref} height="1000px" />
         </div>
     )
 }
