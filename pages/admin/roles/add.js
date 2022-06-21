@@ -61,19 +61,19 @@ function add({ dataUser }) {
                 {
                     Object.keys(roles).map((role, index) => {
                         return (
-                            <div key={role} className='flex justify-between items-center'>
-                                <h1 className='w-[14%] font-semibold capitalize text-gray-700'>{role} :</h1>
-                                <div className='mt-4 flex flex-wrap justify-between w-full items-center ml-6'>
+                            <div key={role} className='mt-3 flex justify-between md:items-center flex-col md:flex-row'>
+                                <h1 className='md:w-[14%] font-semibold capitalize text-gray-700'>{role} :</h1>
+                                <div className='mt-4 flex flex-wrap justify-between gap-y-3 w-full items-center md:ml-6'>
                                     {
 
                                         roles[role].map((action, index) => {
                                             return (
-                                                <div key={action} className='flex items-center w-1/4'>
+                                                <div key={action} className='flex items-center'>
                                                     {/* onChange of checkbox if is checked add it to the roles */}
                                                     <input type="checkbox"
                                                         name={action}
                                                         id={role + '_' + action}
-                                                        className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
+                                                        className="min-w-[30px] min-h-[30px] border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
                                                         onChange={(e) => { handleCheckBox(e, role) }}
                                                     />
                                                     <label className='ml-1 capitalize' htmlFor={role + '_' + action}>{action}</label>
@@ -102,6 +102,7 @@ function add({ dataUser }) {
 }
 
 export const getServerSideProps = async (ctx) => {
+    console.log(ctx);
     const res = await AutoLogin(ctx);
     return {
         props: {
