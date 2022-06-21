@@ -109,8 +109,6 @@ function AddApartment({ apartment = null, setModal = null, setProperty = null })
             setApartments(v => [...v, response.data]);
             setProperty && setProperty(response.data.id);
             setModal && setModal(false);
-            router.push('/admin');
-            router.reload();
         } else {
             toast.notify(response.error, {
                 duration: 2,

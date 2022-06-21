@@ -3,6 +3,7 @@ import { toast, ToastContainer } from 'react-nextjs-toast'
 import { Loader, TwoItemsContainer, Form } from './';
 import { useUserContext } from '../../context/user';
 import fetch from '../../helpers/fetch-data';
+import getLodging from '../../helpers/get-lodging';
 import CurrentDate from '../../helpers/today';
 import Modal from './Modal';
 import Client from './Client';
@@ -14,7 +15,7 @@ const classes = {
     select: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 block w-full mt-4 p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500',
 }
 function Sale({ sale = null }) {
-    const { apartments, clients, user, setSales } = useUserContext();
+    const { apartments, clients, user, setSales, lodgings } = useUserContext();
     //fields
     const [isLoading, setIsLoading] = useState(false);
     const [type, setType] = useState('mensuel');
@@ -175,7 +176,7 @@ function Sale({ sale = null }) {
                                 <option disabled defaultChecked value={''}>Choisir Un Propriété</option>
                                 {
                                     apartments.length && apartments.map(apartment => {
-                                        return <option value={apartment.id} key={apartment.id}>{apartment.city + '/' + apartment.type + '/' + (apartment.type == 'appartment' ? apartment.num_apartment : '')}</option>
+                                        return <option value={apartment.id} key={apartment.id}>{getLodging(apartment.lodging_id, lodgings) + '/' + apartment.type + '/' + (apartment.type == 'appartment' ? apartment.num_apartment : '')}</option>
                                     })
                                 }
                             </select>
@@ -217,7 +218,7 @@ function Sale({ sale = null }) {
                                         onChange={(e) => { setType(e.target.value); resetValues(e.target.value) }}>
                                         <option value="mensuel">Mensuel</option>
                                         <option value="annuel">Annuel</option>
-                                        
+
                                     </select>
                                     <label className={classes.label}>Type </label>
                                 </div>
@@ -229,7 +230,7 @@ function Sale({ sale = null }) {
                                         max={agreedAmount}
                                         onChange={(e) => setMonthlyAmount(e.target.value)}
                                         placeholder=" " />
-                                    <label className={classes.label}>{ type }</label>
+                                    <label className={classes.label}>{type}</label>
                                 </div>
                             </TwoItemsContainer>
                             <TwoItemsContainer>
