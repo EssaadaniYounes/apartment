@@ -17,6 +17,7 @@ function Sale({ sale = null }) {
     const { apartments, clients, user, setSales } = useUserContext();
     //fields
     const [isLoading, setIsLoading] = useState(false);
+    const [type, setType] = useState('mensuel');
     const [showClientModal, setShowClientModal] = useState(false);
     const [showPropertyModal, setShowPropertyModal] = useState(false);
     const [saleType, setSaleType] = useState(sale ? sale.sale_type : '');
@@ -211,14 +212,14 @@ function Sale({ sale = null }) {
 
                             <TwoItemsContainer>
                                 <div className="relative z-0 mb-6 w-full md:w-[49%] group">
-                                    <input type="number"
-                                        max='31'
-                                        min='1'
-                                        className={classes.input}
-                                        value={paymentDate}
-                                        onChange={(e) => setPaymentDate(e.target.value)}
-                                        placeholder=" " />
-                                    <label className={classes.label}>Jour Echéance (ex: le 10 a chaque mois (option)) </label>
+                                    <select className={classes.input}
+                                        value={type}
+                                        onChange={(e) => { setType(e.target.value); resetValues(e.target.value) }}>
+                                        <option value="mensuel">Mensuel</option>
+                                        <option value="annuel">Annuel</option>
+                                        
+                                    </select>
+                                    <label className={classes.label}>Type </label>
                                 </div>
 
                                 <div className="relative z-0 mb-6 inline-block w-full md:w-[49%] group">
@@ -228,7 +229,7 @@ function Sale({ sale = null }) {
                                         max={agreedAmount}
                                         onChange={(e) => setMonthlyAmount(e.target.value)}
                                         placeholder=" " />
-                                    <label className={classes.label}>Mensuel</label>
+                                    <label className={classes.label}>{ type }</label>
                                 </div>
                             </TwoItemsContainer>
                             <TwoItemsContainer>
