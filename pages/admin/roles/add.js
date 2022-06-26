@@ -47,7 +47,7 @@ function add({ dataUser }) {
 
     return (
         <Form>
-            <div className="relative z-0 mb-6 w-1/4 group">
+            <div className="relative z-0 mb-6 w-1/2 group">
                 <input type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
