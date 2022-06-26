@@ -5,12 +5,12 @@ import getBase64 from '../../helpers/get-image';
 function Base64Image({ image = null }) {
     const ref = useRef(null)
     useEffect(() => {
-        const getImageUrl = async (url, ref) => {
-            const base64data = await getBase64(url, ref);
-            return base64data;
-        }
+        // const getImageUrl = async (url, ref) => {
+        //     const base64data = await getBase64(url, ref);
+        //     return base64data;
+        // }
         if (image) {
-            getImageUrl(image, ref)
+            ref.current.src = image;
         }
     }, []);
     return (

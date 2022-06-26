@@ -67,7 +67,7 @@ function AddApartment({ apartment = null, setModal = null, setProperty = null })
         const day = date.getDate();
         for (let i = 0; i < TotalImages; i++) {
             //get day of month
-            paths.push(`http://meatmarketdanish.com/apt/storage/images/apartments/${i}-${day}-${images[i].name}`);
+            paths.push(`https://nhaila.com/apartment_backend/public/images/apartments/${i}-${day}-${images[i].name}`);
 
             formData.append('images' + i, images[i]);
             formData.append('Prefix' + i, `${i}-${day}-`);

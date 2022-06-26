@@ -38,7 +38,7 @@ function Client({ client = null, setShowModal = null, setClient = null }) {
         for (let i = 0; i < TotalImages; i++) {
             //get day of month
 
-            paths.push(`http://meatmarketdanish.com/apt/storage/images/clients/${i}-${day}-${images[i].name}`);
+            paths.push(`https://nhaila.com/apartment_backend/public/images/clients/${i}-${day}-${images[i].name}`);
 
             formData.append('images' + i, images[i]);
             formData.append('Prefix' + i, `${i}-${day}-`);

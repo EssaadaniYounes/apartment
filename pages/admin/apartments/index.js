@@ -17,7 +17,7 @@ export default function Apartments({ dataUser, dataApartments }) {
     const columns = [
         {
             name: "#",
-            cell: (row, index) => <Base64Image image={JSON.parse(row.images)[0]} />,
+            cell: (row, index) => <img src={JSON.parse(row.images)[0]} className='w-full h-full' />,
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,

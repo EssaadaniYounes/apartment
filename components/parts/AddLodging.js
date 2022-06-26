@@ -22,7 +22,7 @@ function AddLodging({ setShowModal, setValue = null, lodging = null, setIsLoadin
 
 
         const formData = new FormData();
-        paths = `http://meatmarketdanish.com/apt/storage/images/lodgings/${image[0].name}`;
+        paths = `https://nhaila.com/apartment_backend/public/images/lodgings/${image[0].name}`;
 
         formData.append('image', image[0]);
         await fetch('lodgings/store', 'post', formData, localStorage.getItem('token'));
@@ -31,7 +31,7 @@ function AddLodging({ setShowModal, setValue = null, lodging = null, setIsLoadin
 
 
         const formData = new FormData();
-        planPath = `http://meatmarketdanish.com/apt/storage/images/lodgings/plan/${plan[0].name}`;
+        planPath = `https://nhaila.com/apartment_backend/public/images/lodgings/plan/${plan[0].name}`;
 
         formData.append('pdf', plan[0]);
         await fetch('lodgings/store', 'post', formData, localStorage.getItem('token'));

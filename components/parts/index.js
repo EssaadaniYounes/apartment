@@ -20,4 +20,5 @@ export { default as SoldedProperties } from './SoldedProperties';
 export { default as TwoItemsContainer } from './TwoItemsContainer';
 export { default as Modal } from './Modal';
 export { default as Base64Image } from './Base64Image';
+export { default as ProjectProfile } from './ProjectProfile';
 
