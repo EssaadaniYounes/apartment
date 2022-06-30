@@ -19,7 +19,7 @@ function EditApartment({ dataUser, apartment, lodgings }) {
     }, []);
 
     return (
-        <div className='p-8'>
+        <div className='py-3 px-2 md:p-8'>
             <span className='text-xl pb-1 font-semibold text-gray-600 block border-b'>
                 Modifier un appartement
             </span>

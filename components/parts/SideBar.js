@@ -1,22 +1,25 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRef } from 'react';
 import { useUserContext } from '../../context/user';
+import { useOnClickOutside } from '../../hooks/click-outside';
 
 
 const classes = {
     links: 'w-full flex flex-col items-start justify-start mt-6 text-sm font-semibold',
-    icon: 'h-6 w-6',
-    link: 'w-full flex gap-2 justify-center text-black md:justify-start items-center my-3 duration-200 hover:text-gray-500',
-    span: 'hidden md:block'
+    icon: 'h-6 w-6 ',
+    link: 'w-full flex gap-2 justify-center text-black md:justify-start justify-center items-center my-3 duration-200 hover:text-gray-500',
+    span: 'w-[60%]'
 }
 
 const SideBar = () => {
 
-    const { user } = useUserContext();
+    const { user, showSideBar, setShowSideBar } = useUserContext();
+
     const permissions = user != null ? user.roles.permissions : null;
 
     return (
-        <div className="not-print text-[#c2c7d0] h-screen fixed  w-[16%] top-0 pt-1 md:pl-4 shadow-xl z-30">
+        <div className={`not-print bg-white text-[#c2c7d0] h-screen fixed overflow-hidden top-0 pt-1 md:pl-4 shadow-xl duration-200 z-10 ${showSideBar ? 'w-0' : 'w-[160px] md:w-[220px]'} `}>
             <div className="w-full h-[50px] flex items-center flex-row-reverse justify-between gap-2">
                 <span className="flex-1 text-black text-[15px] font-semibold hidden md:block">
                     Group Nhaila</span>

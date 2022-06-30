@@ -3,9 +3,20 @@ import Link from 'next/link';
 import { useUserContext } from '../../context/user';
 
 function Header() {
-    const { user, setShowNotifications, notifications } = useUserContext();
+    const { user, setShowNotifications, notifications, showSideBar, setShowSideBar } = useUserContext();
     return (
-        <div className="not-print bg-gray-50 shadow-md text-gray-700 h-[60px] w-full z-20 flex items-center px-12 justify-start gap-6 flex-row-reverse">
+        <div className={`not-print relative  bg-gray-50 shadow-md text-gray-700 h-[60px] duration-200 z-20 w-full flex items-center px-12 justify-start gap-6 flex-row-reverse`}>
+            <div className=' bg-white -mr-6 p-2 shadow-sm rounded-full block md:hidden' onClick={() => setShowSideBar(!showSideBar)}>
+                {
+                    showSideBar ?
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                        </svg> :
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                }
+            </div>
             <Link href='/auth' >
                 <a className="flex items-center gap-1 text-sm font-semibold duration-100 hover:text-gray-500">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -32,6 +43,7 @@ function Header() {
                     {notifications.length < 9 ? notifications.length : +9}
                 </div>
             </div>
+
         </div>
     )
 }

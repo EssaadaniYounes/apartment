@@ -12,6 +12,7 @@ export default function UserWrapper({ children }) {
     const [payments, setPayments] = useState([]);
     const [notifications, setNotifications] = useState([]);
     const [showNotifications, setShowNotifications] = useState(false);
+    const [showSideBar, setShowSideBar] = useState(true);
     return (
         <UserContext.Provider
             value={{
@@ -23,7 +24,8 @@ export default function UserWrapper({ children }) {
                 sales, setSales,
                 payments, setPayments,
                 notifications, setNotifications,
-                showNotifications, setShowNotifications
+                showNotifications, setShowNotifications,
+                showSideBar, setShowSideBar
             }}>
             {children}
         </UserContext.Provider>

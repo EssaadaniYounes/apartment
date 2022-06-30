@@ -31,22 +31,24 @@ function plan({ lodging, dataUser }) {
                     </a>
                 </Link>
             </div>
-            <embed
-                src={lodging.plan}
-                type="application/pdf"
-                frameBorder="0"
-                scrolling="auto"
-                height="700"
-                className='hidden md:block'
-                width="500" />
-            <iframe
-                src={lodging.plan}
-                type="application/pdf"
-                frameBorder="0"
-                scrolling="auto"
-                height="700"
-                className='block md:hidden'
-                width="500" />
+            <div className='w-full h-full'>
+                <embed
+                    src={lodging.plan}
+                    type="application/pdf"
+                    frameBorder="0"
+                    scrolling="auto"
+                    height="100%"
+                    className='hidden md:block'
+                    width="100%" />
+                <iframe
+                    src={lodging.plan}
+                    type="application/pdf"
+                    frameBorder="0"
+                    scrolling="auto"
+                    height="100%"
+                    className='block md:hidden'
+                    width="100%" />
+            </div>
         </div >
     )
 }

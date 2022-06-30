@@ -17,7 +17,7 @@ function Notifications() {
 
     return (
         (notifications.length > 0 && showNotifications) &&
-        <div ref={ref} className="not-print flex flex-col w-[100px] md:w-[400px] shadow-md absolute z-[900] mt-1 mr-3 right-0 max-h-screen overflow-y-auto">
+        <div ref={ref} className="not-print flex flex-col w-[300px] md:w-[400px] shadow-md absolute z-[900] mt-1 mr-3 right-0 max-h-screen overflow-y-auto">
             {notifications.map((notification, index) => <Notification notification={notification} key={index} />)}
         </div>
     )

@@ -136,7 +136,7 @@ function index({ dataPayments, dataUser, dataClients }) {
                     <ToastContainer />
                 </div>
                 <TablesHeader to={can(permission, 'create') && '/admin/sales/sale/payments/add'} title='List de payments' />
-                <div className='flex items-center'>
+                <div className='flex flex-col md:flex-row items-center pr-4'>
                     <div className="relative ml-6 mt-8 z-0 mb-6 w-full md:w-[30%] group">
                         <select
                             className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'

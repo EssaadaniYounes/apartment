@@ -18,7 +18,7 @@ function add({ dataUser, properties, clients, sales }) {
   }, [])
 
   return (
-    <div className='p-8'>
+    <div className='py-3 px-2 md:p-8'>
       <span className='text-xl pb-1 font-semibold text-gray-600 block border-b'>
         Ajouter un payment
       </span>
