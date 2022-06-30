@@ -31,16 +31,20 @@ function plan({ lodging, dataUser }) {
                     </a>
                 </Link>
             </div>
-            <object data={lodging.plan} type="application/pdf" width="300" height="200">
-                <embed
-                    src={lodging.plan}
-                    type="application/pdf"
-                    frameBorder="0"
-                    scrolling="auto"
-                    height="100%"
-                    width="100%"
-                ></embed>
-            </object>
+            <embed
+                src={lodging.plan}
+                type="application/pdf"
+                frameBorder="0"
+                scrolling="auto"
+                height="700"
+                width="500" />
+            <iframe
+                src={lodging.plan}
+                type="application/pdf"
+                frameBorder="0"
+                scrolling="auto"
+                height="700"
+                width="500" />
         </div >
     )
 }
