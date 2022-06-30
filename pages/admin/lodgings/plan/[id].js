@@ -37,6 +37,7 @@ function plan({ lodging, dataUser }) {
                 frameBorder="0"
                 scrolling="auto"
                 height="700"
+                className='hidden md:block'
                 width="500" />
             <iframe
                 src={lodging.plan}
@@ -44,6 +45,7 @@ function plan({ lodging, dataUser }) {
                 frameBorder="0"
                 scrolling="auto"
                 height="700"
+                className='block md:hidden'
                 width="500" />
         </div >
     )
