@@ -101,7 +101,7 @@ function AddApartment({ apartment = null, setModal = null, setProperty = null })
 
         const response = await fetch('properties', 'post', payload, localStorage.getItem('token'));
         if (response) setIsLoading(false);
-        if (response.status === 200) {
+        if (response.status === 201 || response.status === 200) {
             toast.notify('Appartement ajouté bien !', {
                 duration: 2,
                 type: "success"

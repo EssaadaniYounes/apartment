@@ -88,7 +88,7 @@ function AddLodging({ setShowModal, setValue = null, lodging = null, setIsLoadin
         setIsLoading(false);
     }
     return (
-        <div className='z-10 absolute left-0 top-0 bg-[#00000030] w-screen h-screen'>
+        <div className='z-10 absolute left-0 mt-[60px] top-0 bg-[#00000030] w-screen h-screen'>
             <ToastContainer />
             <div className="animate-[scale_1s_ease-in-out] -translate-y-1/2 -translate-x-1/2  md:left-1/2 top-1/2 absolute overflow-hidden bg-gray-50 rounded-md shadow-md left-[55%]  w-[70%] md:w-1/3">
                 <div className='bg-white flex justify-between items-center px-4 w-full font-semibold text-xs md:text-lg text-center py-1'>

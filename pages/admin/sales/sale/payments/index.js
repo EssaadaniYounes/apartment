@@ -135,7 +135,7 @@ function index({ dataPayments, dataUser, dataClients }) {
                 <div className="absolute z-10 -top-[100px] bg-red-400">
                     <ToastContainer />
                 </div>
-                <TablesHeader to={can(permission, 'create') && '/admin/sales/sale/payments/add'} title='List de payments' />
+                <TablesHeader to={can(permission, 'create') && '/admin/sales/sale/payments/add'} title='Liste de payments' />
                 <div className='flex flex-col md:flex-row items-center pr-4'>
                     <div className="relative ml-6 mt-8 z-0 mb-6 w-full md:w-[30%] group">
                         <select

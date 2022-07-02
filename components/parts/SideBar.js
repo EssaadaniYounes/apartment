@@ -8,7 +8,7 @@ import { useOnClickOutside } from '../../hooks/click-outside';
 const classes = {
     links: 'w-full flex flex-col items-start justify-start mt-6 text-sm font-semibold',
     icon: 'h-6 w-6 ',
-    link: 'w-full flex gap-2 justify-center text-black md:justify-start justify-center items-center my-3 duration-200 hover:text-gray-500',
+    link: 'w-full flex gap-2 ml-4 justify-center text-black md:justify-start justify-center items-center my-3 duration-200 hover:text-gray-500',
     span: 'w-[60%]'
 }
 

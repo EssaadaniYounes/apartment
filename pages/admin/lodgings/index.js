@@ -49,7 +49,7 @@ function index({ newLodgings, user }) {
                 </div>
                 <div className='w-full sm:px-6 flex justify-between flex-col sm:flex-row items-center'>
                     <span className='text-xl w-full block mb-6 sm:mr-4 font-semibold text-gray-600  border-b'>
-                        List des projets
+                        Liste des projets
                     </span>
                     {
                         can(permission, 'create') && <span onClick={() => setShowAddLodging(true)} className='flex cursor-pointer items-center w-1/3 justify-center sm:w-fit gap-1 bg-blue-500 py-1 px-4 rounded-lg shadow-md font-semibold text-gray-50 duration-150 hover:bg-blue-700'>

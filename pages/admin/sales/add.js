@@ -8,13 +8,10 @@ function add({ dataUser, properties, clients, lodgings }) {
     const { setUser, setApartments, setClients, setLodgings } = useUserContext();
 
     useEffect(() => {
-        if (dataUser) {
-            setUser(dataUser);
-            setApartments([]);
-            setApartments(properties);
-            setClients(clients);
-            setLodgings(lodgings);
-        }
+        setUser(dataUser);
+        setApartments(properties);
+        setClients(clients);
+        setLodgings(lodgings);
     }, []);
     return (
         <div className='py-3 px-2 md:p-8'>

@@ -78,19 +78,18 @@ function index({ dataUsers, dataUser }) {
                     duration: 2,
                     type: "success"
                 })
-                //filter sales by the id
-                const newUsers = users.filter(user => user.id !== id);
-                setSales(newUsers);
+                //filter users by the id
+                const newUsers = users.filter(user => user.id != id);
+                setUsers(newUsers);
                 setIsDeleting(false);
             }
         }
     }
 
     useEffect(() => {
-        if (dataUsers.length) {
-            setUsers(dataUsers);
-            setUser(dataUser);
-        }
+        console.log(dataUser);
+        setUsers(dataUsers.filter(user => user.id != dataUser.id));
+        setUser(dataUser);
     }, []);
     return (
         <>
@@ -99,7 +98,7 @@ function index({ dataUsers, dataUser }) {
                 <div className="absolute z-10 -top-[100px] bg-red-400">
                     <ToastContainer />
                 </div>
-                <TablesHeader to={can(permission, 'create') && '/admin/users/add'} title={`List D'utilisateurs`} />
+                <TablesHeader to={can(permission, 'create') && '/admin/users/add'} title={`Liste D'utilisateurs`} />
                 <div className="relative ml-6 mt-8 z-0 mb-6 w-full md:w-[49%] group">
                     <input type="text"
                         className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
