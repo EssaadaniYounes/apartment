@@ -4,14 +4,14 @@ import fetch from '../../../helpers/fetch-data';
 import { AutoLogin } from '../../../helpers/auto-login';
 import { useUserContext } from '../../../context/user';
 
-function Add({ dataUser, lodgings }) {
-    const { setUser, setLodgings } = useUserContext();
+function Add({ dataUser, lodgings, apartments }) {
+    const { setUser, setLodgings, setApartments } = useUserContext();
     useEffect(() => {
         if (dataUser) {
             setUser(dataUser);
             setLodgings(lodgings);
+            setApartments(apartments);
         }
-
     }, []);
     return (
         <div className='py-3 px-2 md:p-8'>
@@ -26,11 +26,13 @@ function Add({ dataUser, lodgings }) {
 export async function getServerSideProps(ctx) {
     const token = ctx.req.cookies != undefined ? ctx.req.cookies.token : '';
     const response = await fetch('lodgings', 'get', {}, token);
+    const apartmentsResponse = await fetch('properties', 'get', {}, token);
     const data = await AutoLogin(ctx);
     return {
         props: {
             dataUser: data.dataUser,
             lodgings: response.data,
+            apartments: apartmentsResponse.data
         }
     }
 }

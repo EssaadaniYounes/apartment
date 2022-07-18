@@ -24,7 +24,6 @@ function PageLoader() {
             router.events.off('routeChangeComplet', handleRouteComplete)
         }
     }, [])
-
     return (loading && <div className="absolute z-[400] bg-red-400 h-2 w-32 rounded-md  animate-[leftToRight_1.2s_ease_infinite]">
     </div>)
 }

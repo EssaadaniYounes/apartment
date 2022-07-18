@@ -11,6 +11,7 @@ function AddLodging({ setShowModal, setValue = null, lodging = null, setIsLoadin
     const [type, setType] = useState(lodging?.type ? lodging.type : '');
     const [address, setAddress] = useState(lodging?.address ? lodging.address : '');
     const [city, setCity] = useState(lodging?.city ? lodging.city : '');
+    const [numberElements, setNumberElements] = useState(lodging?.number_elements ? lodging.number_elements : 0);
     const [image, setImage] = useState(null);
     const [plan, setPlan] = useState(null);
     const { setLodgings } = useUserContext();
@@ -47,7 +48,8 @@ function AddLodging({ setShowModal, setValue = null, lodging = null, setIsLoadin
             'address': address,
             'city': city,
             'image': paths,
-            'plan': planPath
+            'plan': planPath,
+            'number_elements': numberElements,
         }
         const response = await fetch('lodgings', 'post', payload, localStorage.getItem('token'));
         if (response.status === 201) {
@@ -73,7 +75,8 @@ function AddLodging({ setShowModal, setValue = null, lodging = null, setIsLoadin
             'address': address,
             'city': city,
             'image': paths,
-            'plan': planPath
+            'plan': planPath,
+            'number_elements': numberElements,
         }
 
         const response = await fetch(`lodgings/${lodging.id}`, 'put', payload, localStorage.getItem('token'));
@@ -129,6 +132,17 @@ function AddLodging({ setShowModal, setValue = null, lodging = null, setIsLoadin
                         </select>
                         <label className={classes.label}>Type</label>
                     </div>
+
+                    <div className="relative z-0 mb-6 w-[full] group">
+                        <input type="number"
+                            className={classes.input}
+                            placeholder=" "
+                            value={numberElements}
+                            onChange={(e) => { setNumberElements(e.target.value); }}
+                        />
+                        <label className={classes.label}>Numero des élement</label>
+                    </div>
+
                     <div className="relative z-0 mb-6 w-[full] group">
                         <input type="file"
                             className={classes.input}

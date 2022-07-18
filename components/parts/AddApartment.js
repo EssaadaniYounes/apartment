@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import { toast, ToastContainer } from 'react-nextjs-toast'
 import { Form } from './index'
 import fetch from '../../helpers/fetch-data';
+import { getAvailableProperties } from '../../helpers/get-available-properties';
 import { Loader, TwoItemsContainer } from './';
 import AddLodging from './AddLodging';
 import { useUserContext } from '../../context/user';
@@ -13,8 +14,11 @@ const classes = {
 }
 
 function AddApartment({ apartment = null, setModal = null, setProperty = null }) {
-    const { lodgings, setApartments } = useUserContext();
+    const { lodgings, setApartments, apartments } = useUserContext();
     const router = useRouter();
+
+
+
     //fields
     const [type, setType] = useState(apartment ? apartment.type : 'appartment');
     const [numApartment, setNumApartment] = useState(apartment ? apartment.num_apartment : 0);
@@ -30,6 +34,7 @@ function AddApartment({ apartment = null, setModal = null, setProperty = null })
     const [status, setStatus] = useState(apartment ? apartment.status : 'disponible');
     const [price, setPrice] = useState(apartment ? apartment.price : '');
     const [images, setImages] = useState([]);
+    const [nums, setNums] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [showModal, setShowModal] = useState(false);
 
@@ -41,6 +46,8 @@ function AddApartment({ apartment = null, setModal = null, setProperty = null })
             setCity(lodgings[0].city);
             setAddress(lodgings[0].address);
             setLodgingId(lodgings[0].id);
+
+            setNums(getAvailableProperties(lodgings[0], apartments));
         }
     }, [lodgings]);
     //functions
@@ -49,6 +56,7 @@ function AddApartment({ apartment = null, setModal = null, setProperty = null })
         if (data) {
             setCity(data.city);
             setAddress(data.address);
+            setNums(getAvailableProperties(data, apartments));
             return;
         }
         //filter lodgings by the id
@@ -56,6 +64,7 @@ function AddApartment({ apartment = null, setModal = null, setProperty = null })
         //set city and address with the current lodging
         setCity(lodging.city);
         setAddress(lodging.address);
+        setNums(getAvailableProperties(lodging, apartments));
     }
     //add
     const saveImages = async () => {
@@ -249,11 +258,14 @@ function AddApartment({ apartment = null, setModal = null, setProperty = null })
                     <>
                         <TwoItemsContainer>
                             <div className="relative z-0 mb-6 w-full md:w-[49%] group">
-                                <input type="text"
-                                    className={classes.input}
+                                <select className={classes.select}
                                     placeholder=" "
                                     value={numApartment}
-                                    onChange={(e) => { setNumApartment(e.target.value) }} />
+                                    onChange={(e) => { setNumApartment(e.target.value) }}>
+                                    {
+                                        nums.map(num => <option key={num} value={num}>{num}</option>)
+                                    }
+                                </select>
                                 <label className={classes.label}>Num Appartement</label>
                             </div>
                             <div className="relative z-0 mb-6 w-full md:w-[49%] group">
