@@ -3,8 +3,10 @@ import fetch from '../../helpers/fetch-data';
 import { useUserContext } from '../../context/user';
 import { useOnClickOutside } from '../../hooks/click-outside';
 import Notification from './Notification';
+import { useRouter } from 'next/router';
 function Notifications() {
     const ref = useRef(null);
+    const router = useRouter();
     const { notifications, setNotifications, showNotifications, setShowNotifications } = useUserContext();
     useOnClickOutside(ref, () => { setShowNotifications(false) })
     useEffect(() => {
@@ -13,7 +15,7 @@ function Notifications() {
             setNotifications(res.data);
         }
         get();
-    }, [])
+    }, [router.pathname])
 
     return (
         (notifications.length > 0 && showNotifications) &&

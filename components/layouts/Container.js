@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 import { useUserContext } from '../../context/user';
 import { Header, Notifications, SideBar } from '../parts';
+import PageLoader from './PageLoader';
 
 function Container(props) {
     const router = useRouter();
@@ -23,7 +24,8 @@ function Container(props) {
                 <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
             </Head>
             {router.pathname &&
-                <div className='flex overflow-y-hidden max-h-screen'>
+                <div className='flex overflow-hidden max-h-screen'>
+                    <PageLoader />
                     {router.pathname != "/auth" && <div className={`bg-white relative ${showSideBar ? '' : 'w-[16%]'}`}><SideBar /></div>}
                     <div className={`flex-1 z-0 ${undisplayedRoutes.includes(router.pathname) ? 'max-w-[100%]' : 'w-full'}`}>
                         {router.pathname != "/auth" && <Header />}

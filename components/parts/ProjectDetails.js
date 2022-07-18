@@ -3,7 +3,7 @@ import React from 'react'
 function ProjectDetails({ lodging, freeProperties, details }) {
     return (
         <div className="flex items-start shadow-sm py-8 px-6 w-full justify-around">
-            <div className="flex justify-around gap-y-2 w-full">
+            <div className="flex justify-around flex-col sm:flex-row gap-y-2 w-full">
                 <span>
                     <span className="font-semibold mr-3">Nom Projet :</span> {lodging.name}
                 </span>

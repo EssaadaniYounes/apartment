@@ -84,7 +84,6 @@ function Payment({ payment = null, saleDetails = null }) {
         }
         setIsLoading(false);
     }
-
     return (
         <>
             {isLoading && <Loader />}
@@ -114,7 +113,7 @@ function Payment({ payment = null, saleDetails = null }) {
                 <TwoItemsContainer>
                     <div className="relative z-0 mb-6 w-full md:w-[49%] group">
                         <select className={classes.input} value={saleId} onChange={(e) => { setSaleId(e.target.value) }}>
-                            <option value="" defaultChecked={true}>Choisir la vente</option>
+                            <option value="" disabled>Choisir la vente</option>
                             {sales.map(sale => <option value={sale.id} key={sale.id}>{sale.city + ' / ' + sale.name}</option>)}
                         </select>
                         <label className={classes.label}>Dossier</label>

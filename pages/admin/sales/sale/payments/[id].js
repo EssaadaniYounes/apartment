@@ -38,10 +38,6 @@ function index({ dataPayments, dataUser }) {
             allowOverflow: true,
             button: true,
         }, {
-            name: 'Num transaction',
-            selector: row => row.num_payment,
-            sortable: true,
-        }, {
             name: 'Amount',
             selector: row => row.amount,
             sortable: true,

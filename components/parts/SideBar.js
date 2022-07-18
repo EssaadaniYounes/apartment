@@ -23,7 +23,7 @@ const SideBar = () => {
             <div className="w-full h-[50px] flex items-center flex-row-reverse justify-between gap-2">
                 <span className="flex-1 text-black text-[15px] font-semibold hidden md:block">
                     Group Nhaila</span>
-                <img src={'/images/logo.png'} className='w-full md:h-[50px] h-full md:w-[50px]' />
+                <img src={'/images/logo.png'} className='w-[100px] h-[55px] mx-auto md:w-[60px]' />
             </div>
             <div className={classes.links}>
                 {

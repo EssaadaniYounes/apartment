@@ -1,9 +1,18 @@
 import React from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useUserContext } from '../../context/user';
+import deleteAllCookies from '../../helpers/delete-cookies';
 
 function Header() {
     const { user, setShowNotifications, notifications, showSideBar, setShowSideBar } = useUserContext();
+    const router = useRouter();
+
+    const onLogoutHandler = async () => {
+        await deleteAllCookies();
+        router.push("/auth");
+    }
+
     return (
         <div className={`not-print relative  bg-gray-50 shadow-md text-gray-700 h-[60px] duration-200 z-20 w-full flex items-center px-12 justify-start gap-6 flex-row-reverse`}>
             <div className=' bg-white -mr-6 p-2 shadow-sm rounded-full block' onClick={() => setShowSideBar(!showSideBar)}>
@@ -17,7 +26,7 @@ function Header() {
                         </svg>
                 }
             </div>
-            <Link href='/auth' >
+            <button onClick={() => onLogoutHandler()}>
                 <a className="flex items-center gap-1 text-sm font-semibold duration-100 hover:text-gray-500">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -26,7 +35,7 @@ function Header() {
                         Se déconnecter
                     </span>
                 </a>
-            </Link>
+            </button>
             <div className="flex items-center gap-1 text-sm font-semibold duration-100 hover:text-gray-500">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />

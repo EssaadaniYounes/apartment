@@ -2,7 +2,7 @@ import React from 'react'
 
 function SaleCard({ data }) {
     return (
-        <div className="rounded-br-md shadow-md p-6 flex">
+        <div className="rounded-br-md shadow-md p-6 flex flex-col md:flex-row">
 
             <Card>
                 <SmallInfos label="Client" value={data.name} />
