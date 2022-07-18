@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from 'react';
-import { Loader } from '../parts'
 function PageLoader() {
     const router = useRouter();
 
@@ -26,8 +25,7 @@ function PageLoader() {
         }
     }, [])
 
-    return (loading && <div className="absolute z-[400] -left-12 top-0 h-2 w-screen overflow-hidden ">
-        <span className="absolute w-32 bg-red-400 h-2  rounded-md  animate-[leftToRight_1.2s_ease_infinite] "></span>
+    return (loading && <div className="absolute z-[400] bg-red-400 h-2 w-32 rounded-md  animate-[leftToRight_1.2s_ease_infinite]">
     </div>)
 }
 
