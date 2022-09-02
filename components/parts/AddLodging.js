@@ -8,7 +8,7 @@ const classes = {
 }
 function AddLodging({ setShowModal, setValue = null, lodging = null, setIsLoading, onCallBack = null }) {
     const [name, setName] = useState(lodging?.name ? lodging.name : '');
-    const [type, setType] = useState(lodging?.type ? lodging.type : '');
+    const [type, setType] = useState(lodging?.type ? lodging.type : 'imouble');
     const [address, setAddress] = useState(lodging?.address ? lodging.address : '');
     const [city, setCity] = useState(lodging?.city ? lodging.city : '');
     const [numberElements, setNumberElements] = useState(lodging?.number_elements ? lodging.number_elements : 0);

@@ -48,9 +48,9 @@ function LodgingDetails({ dataUser, lodging, details, nextPayments }) {
                             <tr>
                                 <td className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">Total</td>
                                 <td className="px-6 py-3"></td>
-                                <td className="px-6 py-3">{details.reduce((acc, cur) => acc + cur.agreed_amount, 0)}</td>
-                                <td className="px-6 py-3">{details.reduce((acc, cur) => acc + cur.advanced_amount, 0)}</td>
-                                <td className="px-6 py-3">{details.reduce((acc, cur) => acc + (+cur.agreed_amount - +cur.rest), 0)}</td>
+                                <td className="px-6 py-3">{details.reduce((acc, cur) => +acc + +cur.agreed_amount, 0)}</td>
+                                <td className="px-6 py-3">{details.reduce((acc, cur) => +acc + +cur.advanced_amount, 0)}</td>
+                                <td className="px-6 py-3">{details.reduce((acc, cur) => +acc + (+cur.agreed_amount - +cur.rest), 0)}</td>
                                 <td className="px-6 py-3">{details.reduce((acc, cur) => +acc + +cur.rest, 0)}</td>
                                 <td className="px-6 py-3"></td>
                             </tr>
