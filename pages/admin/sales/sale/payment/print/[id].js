@@ -21,7 +21,7 @@ function Print({ printData, dataUser }) {
         {/* <h1 className="text-xl text-center font-semibold underline">
         Reçu pour N° : <span>{printData[0].id}</span>
       </h1> */}
-        <div className='text-center grid mt-4 grid-cols-1 md:grid-cols-2 gap-8'>
+        <div className='text-center grid mt-4 grid-cols-1 gap-8'>
           <div>
             <span className="font-semibold">Client :</span> {printData[0].client_name}
           </div>
