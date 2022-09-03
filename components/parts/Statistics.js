@@ -92,7 +92,7 @@ const ApartmentsBoughts = ({ apartments }) => {
                     {
                         calcBought(apartments)
                     }
-                    <span className='text-xs'>{`(${width.toFixed(2)}%)`}</span>
+                    <span className='text-xs'>{`(${width.toFixed(2) == Nan ? 0 : width.toFixed(2)}%)`}</span>
                 </p>
             </div>
             <p className='w-full h-3 rounded-lg mt-2 bg-gray-300 relative'>
