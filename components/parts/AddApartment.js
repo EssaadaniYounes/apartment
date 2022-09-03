@@ -13,15 +13,15 @@ const classes = {
     select: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full mt-4 p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500',
 }
 
-function AddApartment({ apartment = null, setModal = null, setProperty = null }) {
+function AddApartment({ apartment = null, setModal = null, setProperty = null, setAmount = null }) {
     const { lodgings, setApartments, apartments } = useUserContext();
     const router = useRouter();
 
 
 
     //fields
-    const [type, setType] = useState(apartment ? apartment.type : 'appartment');
     const [numApartment, setNumApartment] = useState(apartment ? apartment.num_apartment : 0);
+    const [type, setType] = useState(apartment ? apartment.type : 'appartment');
     const [lounge, setLounge] = useState(apartment ? apartment.lounge : 1);
     const [room, setRoom] = useState(apartment ? apartment.room : 1);
     const [toilet, setToilet] = useState(apartment ? apartment.toilet : 1);
@@ -46,8 +46,9 @@ function AddApartment({ apartment = null, setModal = null, setProperty = null })
             setCity(lodgings[0].city);
             setAddress(lodgings[0].address);
             setLodgingId(lodgings[0].id);
-
-            setNums(getAvailableProperties(lodgings[0], apartments));
+            const availableNums = getAvailableProperties(lodgings[0], apartments)
+            setNums(availableNums);
+            setNumApartment(availableNums[0]);
         }
     }, [lodgings]);
     //functions
@@ -57,6 +58,7 @@ function AddApartment({ apartment = null, setModal = null, setProperty = null })
             setCity(data.city);
             setAddress(data.address);
             setNums(getAvailableProperties(data, apartments));
+            setNumApartment(nums[0]);
             return;
         }
         //filter lodgings by the id
@@ -65,6 +67,7 @@ function AddApartment({ apartment = null, setModal = null, setProperty = null })
         setCity(lodging.city);
         setAddress(lodging.address);
         setNums(getAvailableProperties(lodging, apartments));
+        setNumApartment(nums[0]);
     }
     //add
     const saveImages = async () => {
@@ -118,6 +121,7 @@ function AddApartment({ apartment = null, setModal = null, setProperty = null })
             setApartments(v => [...v, response.data]);
             setProperty && setProperty(response.data.id);
             setModal && setModal(false);
+            setAmount && setAmount(response.data.price)
         } else {
             toast.notify(response.error, {
                 duration: 2,
@@ -243,7 +247,7 @@ function AddApartment({ apartment = null, setModal = null, setProperty = null })
                         <label className={classes.label}>Propriété</label>
                     </div>
                     <div className="relative z-0 mb-6 w-full md:w-[49%] group">
-                        <input type="text"
+                        <input type="number"
                             className={classes.input}
                             placeholder=" "
                             value={price}
@@ -279,7 +283,7 @@ function AddApartment({ apartment = null, setModal = null, setProperty = null })
                         </TwoItemsContainer>
                         <TwoItemsContainer>
                             <div className="relative z-0 mb-6 w-full md:w-[24%] group">
-                                <input type="text"
+                                <input type="number"
                                     className={classes.input}
                                     placeholder=" "
                                     value={lounge}
@@ -287,7 +291,7 @@ function AddApartment({ apartment = null, setModal = null, setProperty = null })
                                 <label className={classes.label}>Salon</label>
                             </div>
                             <div className="relative z-0 mb-6 w-full md:w-[24%] group">
-                                <input type="text"
+                                <input type="number"
                                     className={classes.input}
                                     placeholder=" "
                                     value={room}
@@ -295,7 +299,7 @@ function AddApartment({ apartment = null, setModal = null, setProperty = null })
                                 <label className={classes.label}>Chambres</label>
                             </div>
                             <div className="relative z-0 mb-6 w-full md:w-[24%] group">
-                                <input type="text"
+                                <input type="number"
                                     className={classes.input}
                                     placeholder=" "
                                     value={toilet}
@@ -303,7 +307,7 @@ function AddApartment({ apartment = null, setModal = null, setProperty = null })
                                 <label className={classes.label}>Toilettes</label>
                             </div>
                             <div className="relative z-0 mb-6 w-full md:w-[24%] group">
-                                <input type="text"
+                                <input type="number"
                                     className={classes.input}
                                     placeholder=" "
                                     value={cuisine}
@@ -315,7 +319,7 @@ function AddApartment({ apartment = null, setModal = null, setProperty = null })
                 }
                 <TwoItemsContainer>
                     <div className="relative z-0 mb-6 w-full md:w-[49%] group">
-                        <input type="text"
+                        <input type="number"
                             className={classes.input}
                             placeholder=" "
                             value={space}

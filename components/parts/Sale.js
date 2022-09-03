@@ -126,7 +126,7 @@ function Sale({ sale = null }) {
             {/* property modal */}
             {showPropertyModal &&
                 <Modal setShowModal={setShowPropertyModal}>
-                    <AddApartment setModal={setShowPropertyModal} setProperty={setPropertyId}></AddApartment>
+                    <AddApartment setAmount={ setAgreedAmount} setModal={setShowPropertyModal} setProperty={setPropertyId}></AddApartment>
                 </Modal>
             }
             <Form>
