@@ -13,7 +13,6 @@ function Notifications() {
         const get = async () => {
             const res = await fetch('payments/payment/notifications', 'get', {}, localStorage.getItem('token'));
             setNotifications(res.data);
-            console.log("Fetching")
         }
         get();
     }, [router.pathname])

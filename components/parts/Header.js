@@ -17,7 +17,7 @@ function Header() {
     return (
         <div className={`not-print relative  bg-gray-50 shadow-md text-gray-700 h-[60px] duration-200 z-20 w-full flex items-center px-12 justify-start gap-6 flex-row-reverse`}>
 
-            <div className="bg-blue-300 px-4 py-1 rounded-md text-white cursor-pointer" onClick={() => sendEmail()} >Fetch</div>
+            {/* <div className="bg-blue-300 px-4 py-1 rounded-md text-white cursor-pointer" onClick={() => sendEmail()} >Fetch</div> */}
 
             <div className=' bg-white -mr-6 p-2 shadow-sm rounded-full block' onClick={() => setShowSideBar(!showSideBar)}>
                 {

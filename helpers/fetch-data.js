@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 
-const domaine = "http://127.0.0.1:8000/api/";
-// let domaine = "http://nhaila.com/api/";
+// const domaine = "http://127.0.0.1:8000/api/";
+let domaine = "http://nhaila.com/api/";
 
 const fetch = async (request, method, data, token) => {
     const request_header =
