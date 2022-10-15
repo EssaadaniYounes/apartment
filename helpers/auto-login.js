@@ -1,6 +1,6 @@
 import fetch from './fetch-data';
 export async function AutoLogin(ctx) {
-    if (ctx.req && ctx.req.cookies) {
+    if (ctx.req && ctx.req.cookies["email"]) {
         const email = ctx.req.cookies["email"]
         const password = ctx.req.cookies["password"]
 

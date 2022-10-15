@@ -13,10 +13,10 @@ function Notifications() {
         const get = async () => {
             const res = await fetch('payments/payment/notifications', 'get', {}, localStorage.getItem('token'));
             setNotifications(res.data);
+            console.log("Fetching")
         }
         get();
     }, [router.pathname])
-
     return (
         (notifications.length > 0 && showNotifications) &&
         <div ref={ref} className="not-print flex flex-col w-[300px] md:w-[400px] shadow-md absolute z-[900] mt-1 mr-3 right-0 max-h-screen overflow-y-auto">

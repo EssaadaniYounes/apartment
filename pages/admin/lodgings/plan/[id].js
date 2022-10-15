@@ -31,7 +31,7 @@ function plan({ lodging, dataUser }) {
                     </a>
                 </Link>
             </div>
-            <div className='w-full h-full'>
+            <div className='w-full h-[500px]'>
                 <embed
                     src={lodging.plan}
                     type="application/pdf"

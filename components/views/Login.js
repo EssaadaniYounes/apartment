@@ -21,6 +21,7 @@ function Login() {
         if (payload.email.length === 0 || payload.password.length === 0) return setError('المرجو ملأ المعلومات أولا')
 
         const response = await fetch('login', 'post', payload, null);
+        
         if (response.status === 404) return setError(response.data.data.error);
         //Redirect to dashboard page if user is logged in 
         if (response.status === 200) {
@@ -36,7 +37,7 @@ function Login() {
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
             <div className="px-8 py-6 mt-2 text-left bg-white shadow-lg">
                 <div className="relative flex items-center justify-center">
-                    <Image src={'/images/logo.png'} width={160} height={150}/>
+                    <Image src={'/images/logo.png'} width={160} height={150} />
                 </div>
                 <h3 className="text-2xl font-semibold text-center text-gray-700">Connectez-vous au compte</h3>
                 <div>
