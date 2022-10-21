@@ -62,7 +62,6 @@ export async function getServerSideProps(ctx) {
   const { id } = ctx.params;
   const res = await AutoLogin(ctx);
   const data = await fetch(`payment/print/${id}`, 'get', {}, ctx.req.cookies.token);
-  console.log(data.data)
   return {
     props: {
       printData: data.data,

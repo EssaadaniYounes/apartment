@@ -92,6 +92,7 @@ export async function getServerSideProps(ctx) {
     const { dataUser } = await AutoLogin(ctx);
     const { id } = ctx.params;
     const { data: payments } = await fetch(`project_payments/payments/${id}`, 'get', {}, ctx.req.cookies.token);
+    
     return {
         props: {
             dataUser,

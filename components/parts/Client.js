@@ -110,7 +110,6 @@ function Client({ client = null, setShowModal = null, setClient = null }) {
         };
 
     }
-    console.log(imagesPreview, client);
     let imgsPreview = [];
     const handlePreview = (e) => {
         setImages(e.target.files);

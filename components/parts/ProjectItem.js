@@ -15,7 +15,6 @@ function ProjectItem({ project_id, setState, item = null }) {
             const res = await fetch('project_payment_items', 'post', data, localStorage.getItem('token'));
             if (res.data.success) {
                 setProjectPaymentItems([...projectPaymentItems, res.data]);
-                console.log(projectPayments.find(p => p.id == project_id));
                 const newPayments = projectPayments.map(p => {
                     if (p.id == project_id) {
                         const paid = +p.paid + +data.amount;

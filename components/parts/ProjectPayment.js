@@ -21,13 +21,11 @@ function ProjectPayment({ payment = null }) {
     setData({ ...data, [name]: value });
   }
   const handleSubmit = async () => {
-    console.log(payment)
     if (payment) {
       console.log("Theress")
     }
     else {
       const res = await fetch('project_payments', 'POST', data, localStorage.getItem('token'));
-      console.log(res);
     }
     router.push('/admin/lodgings/' + data.lodging_id);
   }

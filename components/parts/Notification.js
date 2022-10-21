@@ -3,17 +3,15 @@ import fetch from '../../helpers/fetch-data'
 function Notification({ notification }) {
 
     const [isSeen, setIsSeen] = useState(notification.seen);
-    const sendEmail = async () => {
-        console.log(isSeen)
-        if (isSeen == 0) {
-            const res = await fetch('send-mail', 'POST', { notification: notification }, localStorage.getItem('token'));
-            console.log(res);
-            setIsSeen(1);
-        }
-    }
+    // const sendEmail = async () => {
+    //     if (isSeen == 0) {
+    //         const res = await fetch('send-mail', 'POST', { notification: notification }, localStorage.getItem('token'));
+    //         setIsSeen(1);
+    //     }
+    // }
 
     return (
-        <div onClick={() => sendEmail()} className={`duration-150 p-2 border-b border-gray-400 ${isSeen == 0 ? 'bg-slate-200' : 'bg-white'} cursor-pointer`}>
+        <div className={`duration-150 p-2 border-b border-gray-400 ${isSeen == 0 ? 'bg-slate-200' : 'bg-white'} cursor-pointer`}>
             <h4 className='font-bold flex gap-2 text-[13px]'>{notification.next_payment} |
                 <span className='capitalize flex items-center '>
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
