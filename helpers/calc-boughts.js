@@ -10,7 +10,7 @@ export default function calcBought(apartments) {
 export function getLastPayment(id, payments) {
     if (payments.length > 0) {
         const commun = payments.filter(payment => payment.id == id);
-        return commun[commun.length - 1].next_payment
+        return commun[commun.length - 1]?.next_payment
     }
     return ' '
 }

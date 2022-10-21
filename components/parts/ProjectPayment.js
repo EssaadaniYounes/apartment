@@ -37,12 +37,14 @@ function ProjectPayment({ payment = null }) {
           <div className="input-container">
             <label htmlFor="" className='label'>Projet</label>
             <select className='input-rounded' name='lodging_id' value={data.lodging_id} onChange={(e) => handleChange(e)}>
+              <option value="1">Choisir le projet</option>
               {lodgings.map(lodging => <option value={lodging.value} key={lodging.value}>{lodging.label}</option>)}
             </select>
           </div>
           <div className="input-container">
             <label htmlFor="" className='label'>Client</label>
             <select className='input-rounded' name='client_id' value={data.client_id} onChange={(e) => handleChange(e)}>
+            <option value="1">Choisir le client</option>
               {clients.map(client => <option value={client.value} key={client.value}>{client.label}</option>)}
             </select>
           </div>
