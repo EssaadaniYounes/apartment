@@ -10,7 +10,7 @@ function Container(props) {
     const [undisplayedRoutes, setUndisplayedRoutes] = useState([
         '/auth',
     ]);
-    const { showSideBar } = useUserContext();
+    const { showSideBar, setShowSideBar } = useUserContext();
     useEffect(() => {
         //get route full url
         const route = router.pathname;
@@ -18,6 +18,7 @@ function Container(props) {
             setUndisplayedRoutes(v => [...v, route]);
         }
     }, []);
+
     return (
         <>
             <Head>
@@ -30,7 +31,7 @@ function Container(props) {
                     <div className={`flex-1 z-0 ${undisplayedRoutes.includes(router.pathname) ? 'max-w-[100%]' : 'w-full'}`}>
                         {router.pathname != "/auth" && <Header />}
                         {router.pathname != "/auth" && < Notifications />}
-                        <div className='max-h-screen overflow-y-auto pb-[5rem] mx-3'>
+                        <div className=' overflow-y-auto pb-[5rem] min-h-full'>
                             {props.children}
                         </div>
                     </div>

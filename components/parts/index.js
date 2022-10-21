@@ -21,4 +21,7 @@ export { default as TwoItemsContainer } from './TwoItemsContainer';
 export { default as Modal } from './Modal';
 export { default as Base64Image } from './Base64Image';
 export { default as ProjectProfile } from './ProjectProfile';
+export { default as ProjectPayment } from './ProjectPayment';
+export { default as Empty } from './Empty';
+export { default as ProjectItem } from './ProjectItem';
 

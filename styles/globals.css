@@ -7,3 +7,86 @@
         display: none;
     }
 }
+
+.button-add {
+  @apply focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-500;
+}
+.button-save {
+  @apply max-w-[190px] focus:outline-none text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-xl px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900 w-fit;
+}
+.button-back {
+  @apply focus:outline-none text-white bg-gray-500 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-900 w-fit;
+}
+
+.purple-button {
+  @apply max-w-[190px] focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-xl px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900;
+}
+
+.yellow-button {
+  @apply focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-xl px-5 py-2.5  mb-2 dark:focus:ring-yellow-900;
+}
+.hovered-blue-button {
+  @apply min-w-[40px]  text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-[24px] dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800 flex items-center justify-center duration-200 cursor-pointer;
+}
+.hovered-yellow-button {
+  @apply min-w-[40px]  text-yellow-700 hover:text-white border border-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-[24px] dark:border-yellow-500 dark:text-yellow-500 dark:hover:text-white dark:hover:bg-yellow-600 dark:focus:ring-yellow-800 flex items-center justify-center duration-200 cursor-pointer;
+}
+
+.input-rounded {
+  @apply h-10 bg-white border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
+}
+.items-container {
+  @apply flex-1 flex gap-2 flex-col md:flex-row mb-3;
+}
+.input-container {
+  @apply min-w-[130px] flex-1;
+}
+.form-content {
+  @apply px-2 py-[6px];
+}
+input[readonly] {
+  @apply bg-gray-100;
+}
+.label {
+  @apply block mb-1 text-sm font-medium text-gray-900 dark:text-gray-300;
+}
+
+.pos-table {
+  border: none;
+}
+
+.pos-table thead tr th,
+.pos-table tbody tr td,
+.pos-table tfoot tr td {
+  border-left: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+.pos-table thead tr th {
+  background-color: #ddd;
+}
+.sub-total th {
+  background-color: #eee;
+  border: 1px solid #ccc;
+}
+.pos-table thead tr th {
+  border-top: 1px solid #ccc;
+  padding: 5px 3px;
+  line-height: 2;
+  text-align: center;
+}
+
+.pos-table tbody tr td:last-child,
+.pos-table thead tr th:last-child,
+.pos-table tfoot tr td:last-child
+ {
+  border-right: 1px solid #ccc;
+}
+
+.pos-table tbody tr td input {
+  border: none;
+  outline: none;
+  border-radius: 0 !important;
+}
+.post-table-action svg {
+  margin: 0 auto;
+}

@@ -87,7 +87,7 @@ function index({ dataUsers, dataUser }) {
     }
 
     useEffect(() => {
-        console.log(dataUser);
+        
         setUsers(dataUsers.filter(user => user.id != dataUser.id));
         setUser(dataUser);
     }, []);

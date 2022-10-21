@@ -4,7 +4,7 @@ import UserWrapper from '../context/user';
 
 
 function MyApp({ Component, pageProps }) {
-
+  
   return (
     <UserWrapper>
 
